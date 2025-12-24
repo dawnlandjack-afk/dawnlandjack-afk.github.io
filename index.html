@@ -9,9 +9,8 @@
             margin: 0;
             padding: 20px 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* 花束灵感渐变背景：香槟粉到蓝紫 */
-            background: linear-gradient(to bottom, #fdf2f8, #e6e6fa);
-            color: #ffffff;
+            /* 花束灵感背景：柔粉到浅紫渐变，有层次又温柔 */
+            background: linear-gradient(to bottom, #ffe4f0, #f0e6ff);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -22,18 +21,18 @@
         .container {
             max-width: 90%;
             width: 800px;
-            padding: 25px;
-            background: rgba(240, 248, 255, 0.4); /* 浅蓝白半透明，像花束包装 */
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.6); /* 半透明白，内容清晰 */
             border-radius: 30px;
-            box-shadow: 0 0 40px rgba(255, 182, 230, 0.4); /* 柔粉辉光 */
-            border: 2px solid rgba(220, 240, 230, 0.6); /* 浅绿边框 */
+            box-shadow: 0 0 40px rgba(255, 182, 230, 0.6);
+            border: 2px solid rgba(240, 220, 240, 0.8);
             text-align: center;
         }
         h1 {
             font-size: 2.8em;
             margin: 10px 0 30px;
-            text-shadow: 0 0 15px rgba(255, 182, 230, 0.8); /* 粉色光晕 */
-            color: #ffffff;
+            color: #d8a7ca; /* 柔和粉紫文字 */
+            text-shadow: 0 0 15px rgba(255, 182, 230, 0.8);
             opacity: 0;
         }
         .photos {
@@ -48,8 +47,8 @@
             max-width: 420px;
             border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 0 30px rgba(255, 182, 230, 0.5);
-            border: 4px solid rgba(255, 228, 225, 0.7); /* 香槟粉边框 */
+            box-shadow: 0 0 30px rgba(255, 182, 230, 0.6);
+            border: 4px solid rgba(255, 220, 230, 0.8);
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1s ease, transform 1s ease;
@@ -67,10 +66,11 @@
             font-size: 1.45em;
             line-height: 2em;
             margin: 40px 0;
-            padding: 25px;
-            background: rgba(255, 245, 250, 0.3); /* 浅粉透明，像花瓣 */
+            padding: 30px;
+            background: rgba(255, 245, 250, 0.7);
             border-radius: 25px;
-            border: 1px solid rgba(221, 160, 221, 0.4); /* 浅紫边 */
+            border: 1px solid rgba(230, 190, 230, 0.6);
+            color: #b08bb0; /* 深粉紫文字，清晰可读 */
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -91,8 +91,8 @@
             font-size: 1.9em;
             margin: 30px 0 10px;
             font-style: italic;
+            color: #d8a7ca;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.8);
-            color: #ffffff;
             opacity: 0;
         }
         .hearts {
@@ -110,10 +110,9 @@
             animation: float 22s infinite linear;
             opacity: 0.4;
         }
-        /* 花束颜色爱心：粉、香槟、蓝紫、白 */
         .heart.pink { color: #ffb6c1; }
         .heart.champagne { color: #fadadd; }
-        .heart.lavender { color: #e6e6fa; }
+        .heart.lavender { color: #e6d0ff; }
         .heart.white { color: #ffffff; }
         @keyframes float {
             0% { transform: translateY(100vh) rotate(0deg); }
@@ -126,8 +125,8 @@
             font-size: 42px;
             cursor: pointer;
             z-index: 10;
+            color: #d8a7ca;
             text-shadow: 0 0 12px rgba(255, 182, 230, 0.8);
-            opacity: 0.8;
         }
     </style>
 </head>
@@ -153,7 +152,7 @@
 
         <div class="message" id="message"></div>
 
-        <div class="signature" id="signature">熊诗玉 ♥ 海来伍沙</div>
+        <div class="signature" id="signature">永恒的爱 ♥ 海来伍沙</div>
     </div>
 
     <script>
@@ -172,7 +171,7 @@
             }
         }
 
-        // 背景飘心（花束颜色，稀疏优雅）
+        // 背景飘心（花束色系，稀疏）
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
@@ -187,76 +186,38 @@
             heart.style.animationDuration = 18 + Math.random() * 10 + 's';
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 28000);
-        }, 3000); // 更少
+        }, 3000);
 
-        // 标题、照片、告白动画同之前（精致少量爱心）
-        // ... (脚本部分保持不变，省略以节省空间，但完整代码已包含)
-        // (实际使用时请用完整脚本，和之前一样)
+        // 标题逐字
+        const title = document.getElementById('title');
+        const titleText = title.innerHTML;
+        title.innerHTML = '';
+        let i = 0;
+        const typeTitle = () => {
+            if (i < titleText.length) {
+                title.innerHTML += titleText.charAt(i);
+                i++;
+                setTimeout(typeTitle, 120);
+            } else {
+                title.style.opacity = 1;
+                setTimeout(showPhotos, 1000);
+            }
+        };
+        setTimeout(typeTitle, 800);
 
-        // 完整脚本请参考上一版，只改了颜色类名
-        // 这里为了简洁，脚本逻辑相同
-    </script>
-</body>
-</html>
-<script>
-    const audio = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicBtn');
-    audio.volume = 0.4;
-    audio.play().catch(() => {});
-
-    function toggleMusic() {
-        if (audio.paused) {
-            audio.play();
-            musicBtn.innerHTML = '🎶';
-        } else {
-            audio.pause();
-            musicBtn.innerHTML = '🎵';
+        // 照片逐个淡入
+        const photoFrames = document.querySelectorAll('.photo-frame');
+        function showPhotos() {
+            photoFrames.forEach((frame, index) => {
+                setTimeout(() => {
+                    frame.classList.add('show');
+                }, index * 500);
+            });
+            setTimeout(typeMessage, photoFrames.length * 500 + 1000);
         }
-    }
 
-    const heartsContainer = document.getElementById('hearts');
-    setInterval(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        const rand = Math.random();
-        if (rand < 0.3) heart.classList.add('pink');
-        else if (rand < 0.5) heart.classList.add('champagne');
-        else if (rand < 0.8) heart.classList.add('lavender');
-        else heart.classList.add('white');
-        heart.innerHTML = '♥';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = 18 + Math.random() * 10 + 's';
-        heartsContainer.appendChild(heart);
-        setTimeout(() => heart.remove(), 28000);
-    }, 3000);
-
-    const title = document.getElementById('title');
-    const titleText = title.innerHTML;
-    title.innerHTML = '';
-    let i = 0;
-    const typeTitle = () => {
-        if (i < titleText.length) {
-            title.innerHTML += titleText.charAt(i);
-            i++;
-            setTimeout(typeTitle, 120);
-        } else {
-            title.style.opacity = 1;
-            setTimeout(showPhotos, 1000);
-        }
-    };
-    setTimeout(typeTitle, 800);
-
-    const photoFrames = document.querySelectorAll('.photo-frame');
-    function showPhotos() {
-        photoFrames.forEach((frame, index) => {
-            setTimeout(() => {
-                frame.classList.add('show');
-            }, index * 500);
-        });
-        setTimeout(typeMessage, photoFrames.length * 500 + 1000);
-    }
-
-    const fullText = `亲爱的诗玉，
+        // 告白逐字 + 少量爱心
+        const fullText = `亲爱的诗玉，
 
 新的一年又来了，这是属于我们的2026年。
 从遇见你的那一刻起，你就是我生命中最美的风景，最温暖的港湾。
@@ -275,40 +236,42 @@
 海来伍沙
 2026年1月1日`;
 
-    const messageDiv = document.getElementById('message');
-    let index = 0;
-    let heartCount = 0;
-    function typeMessage() {
-        if (index < fullText.length) {
-            const char = fullText.charAt(index);
-            if (char === '\n') {
-                messageDiv.innerHTML += '<br>';
-            } else {
-                messageDiv.innerHTML += char;
-                if (heartCount < 10 && Math.random() < 0.12) {
-                    createTypeHeart();
-                    heartCount++;
+        const messageDiv = document.getElementById('message');
+        let index = 0;
+        let heartCount = 0;
+        function typeMessage() {
+            if (index < fullText.length) {
+                const char = fullText.charAt(index);
+                if (char === '\n') {
+                    messageDiv.innerHTML += '<br>';
+                } else {
+                    messageDiv.innerHTML += char;
+                    if (heartCount < 10 && Math.random() < 0.12) {
+                        createTypeHeart();
+                        heartCount++;
+                    }
                 }
+                index++;
+                const delay = char === '\n' ? 600 : (Math.random() * 60 + 100);
+                setTimeout(typeMessage, delay);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('signature').style.opacity = 1;
+                }, 1200);
             }
-            index++;
-            const delay = char === '\n' ? 600 : (Math.random() * 60 + 100);
-            setTimeout(typeMessage, delay);
-        } else {
-            setTimeout(() => {
-                document.getElementById('signature').style.opacity = 1;
-            }, 1200);
         }
-    }
 
-    function createTypeHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('type-heart');
-        const colors = ['#ffb6c1', '#fadadd', '#e6e6fa', '#ffffff'];
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-        heart.innerHTML = '♥';
-        heart.style.left = (Math.random() * 70 + 15) + '%';
-        heart.style.top = (messageDiv.scrollHeight - 40) + 'px';
-        messageDiv.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-    }
-</script>
+        function createTypeHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('type-heart');
+            const colors = ['#ffb6c1', '#fadadd', '#e6d0ff', '#ffffff'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.innerHTML = '♥';
+            heart.style.left = (Math.random() * 70 + 15) + '%';
+            heart.style.top = (messageDiv.scrollHeight - 40) + 'px';
+            messageDiv.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
