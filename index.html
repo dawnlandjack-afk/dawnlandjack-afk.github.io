@@ -9,7 +9,6 @@
             margin: 0;
             padding: 20px 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* 花束灵感背景：柔粉到浅紫渐变，有层次又温柔 */
             background: linear-gradient(to bottom, #ffe4f0, #f0e6ff);
             min-height: 100vh;
             display: flex;
@@ -22,7 +21,7 @@
             max-width: 90%;
             width: 800px;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.6); /* 半透明白，内容清晰 */
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 30px;
             box-shadow: 0 0 40px rgba(255, 182, 230, 0.6);
             border: 2px solid rgba(240, 220, 240, 0.8);
@@ -31,7 +30,7 @@
         h1 {
             font-size: 2.8em;
             margin: 10px 0 30px;
-            color: #d8a7ca; /* 柔和粉紫文字 */
+            color: #d8a7ca;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.8);
             opacity: 0;
         }
@@ -70,7 +69,7 @@
             background: rgba(255, 245, 250, 0.7);
             border-radius: 25px;
             border: 1px solid rgba(230, 190, 230, 0.6);
-            color: #b08bb0; /* 深粉紫文字，清晰可读 */
+            color: #b08bb0;
             text-align: left;
             position: relative;
             overflow: hidden;
@@ -142,12 +141,13 @@
         <h1 id="title">亲爱的诗玉<br>2026 新年快乐！</h1>
         
         <div class="photos" id="photos">
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-1.jpeg" alt="周年纪念"></div>
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-2.jpeg" alt="足球场自拍"></div>
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-3.jpeg" alt="比心"></div>
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-4.jpeg" alt="牵手捧花"></div>
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-5.jpeg" alt="握拳交扣"></div>
-            <div class="photo-frame"><img src="https://images.weserv.nl/?url=https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-6.jpeg" alt="爱心花束"></div>
+            <!-- 替换为公开稳定浪漫照片 -->
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg" alt="周年纪念"></div>
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/1484789/pexels-photo-1484789.jpeg" alt="夜场甜蜜自拍"></div>
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/1034859/pexels-photo-1034859.jpeg" alt="比心手势"></div>
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/2658368/pexels-photo-2658368.jpeg" alt="牵手捧花"></div>
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/3585118/pexels-photo-3585118.jpeg" alt="握拳交扣"></div>
+            <div class="photo-frame"><img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" alt="爱心包围花束"></div>
         </div>
 
         <div class="message" id="message"></div>
@@ -156,6 +156,7 @@
     </div>
 
     <script>
+        // 脚本同上，保持浪漫效果
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         audio.volume = 0.4;
@@ -171,7 +172,6 @@
             }
         }
 
-        // 背景飘心（花束色系，稀疏）
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
@@ -188,7 +188,6 @@
             setTimeout(() => heart.remove(), 28000);
         }, 3000);
 
-        // 标题逐字
         const title = document.getElementById('title');
         const titleText = title.innerHTML;
         title.innerHTML = '';
@@ -205,7 +204,6 @@
         };
         setTimeout(typeTitle, 800);
 
-        // 照片逐个淡入
         const photoFrames = document.querySelectorAll('.photo-frame');
         function showPhotos() {
             photoFrames.forEach((frame, index) => {
@@ -216,7 +214,6 @@
             setTimeout(typeMessage, photoFrames.length * 500 + 1000);
         }
 
-        // 告白逐字 + 少量爱心
         const fullText = `亲爱的诗玉，
 
 新的一年又来了，这是属于我们的2026年。
