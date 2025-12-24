@@ -33,23 +33,30 @@
     <div class="particles" id="particles"></div>
     <div class="container">
         <h1>2026年，给我的诗玉师妹</h1>
-        <div class="heart-top"></div>
+        <div class="heart-top">💕</div>
         <div class="letter-box" id="letter"></div>
         <div class="photos-section" id="photosSection">
             <div class="photos-title">我们的甜蜜回忆</div>
             <div class="photos-carousel" id="photosCarousel"></div>
         </div>
-        <div class="heart-bottom"></div>
+        <div class="heart-bottom">💕💕💕</div>
     </div>
+
     <script>
         const fullText = `亲爱的诗玉师妹：
+
 从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
+
 每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
+
 我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
+
 诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
+
 永远爱你的，
 师兄哥哥
 2026年1月1日`;
+
         const photoUrls = [
             "https://s2.loli.net/2025/12/25/9vQbYkZ4oJ1rLhD.jpg",
             "https://s2.loli.net/2025/12/25/5nX6pL9vZ3cR2jM.jpg",
@@ -58,12 +65,14 @@
             "https://s2.loli.net/2025/12/25/7jM3qP6vN9tR5kX.jpg",
             "https://s2.loli.net/2025/12/25/2xL9kZ5vJ7pQ8rN.jpg"
         ];
+
         const letterBox = document.getElementById('letter');
         const photosSection = document.getElementById('photosSection');
         const photosCarousel = document.getElementById('photosCarousel');
         let i = 0;
         const typingSpeed = 100;
         const paragraphPause = 800;
+
         function typeWriter() {
             if (i < fullText.length) {
                 const char = fullText[i];
@@ -101,9 +110,11 @@
                 setTimeout(() => { photosSection.style.opacity = 1; }, 500);
             }
         }
+
         window.onload = () => setTimeout(typeWriter, 1000);
+
         const particlesContainer = document.getElementById('particles');
-        const petals = ['','','','','️',''];
+        const petals = ['🌸','🌺','🌷','💮','🏵️','🌹'];
         function createParticle() {
             const p = document.createElement('div');
             p.classList.add('particle');
@@ -119,4 +130,3 @@
     </script>
 </body>
 </html>
-
