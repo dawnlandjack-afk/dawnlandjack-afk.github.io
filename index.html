@@ -1,234 +1,244 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>致我最爱的诗玉 - 一起走向2026年</title>
+    <title>2025 圣诞快乐！🎄</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
             height: 100vh;
-            background: linear-gradient(to bottom, #000033, #000066);
             overflow: hidden;
-            font-family: 'KaiTi', 'STKaiTi', 'Microsoft YaHei', serif;
-            color: #fff;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             position: relative;
         }
 
-        .stars {
+        /* 雪花 */
+        .snowflake {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-        }
-
-        /* 樱花瓣飘落 */
-        .petal {
-            position: absolute;
-            width: 20px;
-            height: 30px;
-            background: url('https://cdn.jsdelivr.net/gh/noobdream/imgbed@main/img/petal.png') no-repeat center/cover;
-            opacity: 0.8;
+            top: -10px;
+            color: #fff;
+            font-size: 1.5em;
+            pointer-events: none;
             animation: fall linear infinite;
+            opacity: 0.8;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            to {
+                transform: translateY(100vh);
+            }
         }
 
-        /* 浮动爱心 */
-        .heart {
-            position: absolute;
-            font-size: 30px;
-            color: #ff69b4;
-            opacity: 0.7;
-            animation: float 12s infinite linear;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0); }
-            100% { transform: translateY(-100vh) scale(1); }
-        }
-
-        .container {
-            text-align: center;
-            z-index: 10;
-            max-width: 900px;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.4);
+        /* 主内容 */
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 0 40px rgba(255, 105, 180, 0.6);
-            backdrop-filter: blur(5px);
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            z-index: 10;
         }
 
         h1 {
-            font-size: 50px;
-            margin-bottom: 40px;
-            text-shadow: 0 0 15px #ff69b4;
-            letter-spacing: 2px;
+            font-size: 4em;
+            margin: 0 0 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
-        #love-letter {
-            font-size: 24px;
-            line-height: 2.2;
-            min-height: 300px;
-            white-space: pre-wrap;
+        p {
+            font-size: 1.8em;
+            margin: 20px 0;
         }
 
-        .signature {
-            margin-top: 60px;
-            font-size: 30px;
-            font-style: italic;
-            text-shadow: 0 0 10px #ff1493;
+        button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.4em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
         }
 
-        .footer {
-            margin-top: 50px;
-            font-size: 20px;
+        button:hover {
+            transform: scale(1.1);
+            background: #c0392b;
+        }
+
+        /* 个性化祝福 */
+        #personalMessage {
+            font-size: 2.2em;
+            margin-top: 30px;
+            min-height: 80px;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        /* 音乐开关 */
+        #musicToggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        /* 鼠标星星 */
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 8px white;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        /* 礼花画布 */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 5;
         }
     </style>
 </head>
 <body>
-    <!-- 背景音乐（温柔又带点热烈的钢琴曲） -->
-    <audio autoplay loop>
-        <source src="https://music.163.com/song/media/outer/url?id=261211.mp3" type="audio/mpeg">
-        <!-- 备用音乐：https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 -->
+    <canvas id="fireworks"></canvas>
+
+    <div id="musicToggle">🔔</div>
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.jsdelivr.net/gh/moeplayer/CDN@master/jingle-bells.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 星空canvas -->
-    <canvas class="stars" id="stars"></canvas>
+    <div class="card">
+        <h1>Merry Christmas!</h1>
+        <p>2025年圣诞节</p>
+        <p>愿平安、喜乐与爱常伴你左右 🎄✨</p>
+        <button id="wishBtn">发送祝福</button>
+        <div id="personalMessage"></div>
+    </div>
 
-    <!-- 主内容 -->
-    <div class="container">
-        <h1>诗玉！！！我的诗玉宝贝！！！</h1>
-        <p id="love-letter"></p>
-        <p class="signature">——死皮赖脸、一往情深、永远属于你的 [海来伍沙]</p>
-        <p class="footer">2026年，我们继续又燃又甜又炸裂地相爱！❤️</p>
+    <!-- 模态框 -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>定制你的圣诞祝福</h2>
+            <input type="text" id="nameInput" placeholder="你的名字（可选）">
+            <textarea id="messageInput" rows="4" placeholder="写下你的祝福..."></textarea>
+            <button id="submitWish">发送</button>
+            <button id="closeModal" style="background:#95a5a6; margin-top:10px;">取消</button>
+        </div>
     </div>
 
     <script>
-        // 最终确定的超级浪漫文案
-        const letter = `诗玉！！！我的诗玉宝贝！！！
+        // 雪花
+        function createSnowflake() {
+            const snow = document.createElement('div');
+            snow.classList.add('snowflake');
+            snow.textContent = ['❄', '✳', '❅', '❆'][Math.floor(Math.random() * 4)];
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.fontSize = Math.random() * 1 + 1.2 + 'em';
+            snow.style.animationDuration = Math.random() * 8 + 7 + 's';
+            snow.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(snow);
 
-2026年的今天，我要不顾一切地冲到你面前大喊：  
-我爱你！爱到想把全世界的声音都关掉，只听你一个人的心跳！  
-爱到想把天上的云都捏成心形，写上“诗玉专属”然后砸到你怀里！
-
-你这个小坏蛋，小淘气，小磨人精！  
-每次故意用手指戳我脸，说“哎呀，你脸红啦”，其实你自己耳朵早就红成小番茄了。  
-你一撒娇，我就彻底投降；你一瞪眼，我就假装怕怕其实心里乐开花；你半夜说“饿了”，我立刻变身外卖小哥兼私人厨师——谁让你是我最最最宝贝的诗玉呢！
-
-你不知道，你随便一个抱抱，就能让我原地复活；你随便一句“在呢”，就能让我觉得整个宇宙都在给我打call。  
-你是我见过最可爱的小炸弹，炸得我满心都是粉色碎屑，炸得我这辈子都离不开你了。
-
-诗玉，我要跟你疯狂相爱一万年！  
-想牵着你去坐全世界最刺激的过山车，然后在最高点亲你一口；  
-想跟你一起在海边堆一个超丑的沙堡，然后郑重宣布那是我们的城堡；  
-想下雨天把你整个抱起来转圈，让雨都嫉妒我们太甜；  
-想老了以后还跟你手牵手散步，你嫌我走得慢，我就故意再慢点，好多牵你一会儿。
-
-我发誓：  
-所有第一口甜品给你吃，所有最后一口热汤给你喝，  
-所有冷了的时候我给你暖手，所有热了的时候我给你扇风，  
-所有开心我陪你放大十倍，所有难过我替你扛走一百倍。
-
-所以，诗玉，准备好被我宠上天了吗？  
-余生请继续让我做你的专属小狼狗、专属树洞、专属开心果、专属超级黏人精！  
-我们要一起把每一天都过成狂欢节，过成只有我们俩才懂的甜蜜大冒险！
-
-爱你，爱到世界末日都嫌不够！  
-爱你，爱到下下下辈子还想继续赖着你！
-
-`;
-
-        let i = 0;
-        const speed = 80; // 打字速度，数值越小越快
-        const elem = document.getElementById("love-letter");
-
-        function typeWriter() {
-            if (i < letter.length) {
-                elem.innerHTML += letter.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
+            setTimeout(() => snow.remove(), 15000);
         }
+        setInterval(createSnowflake, 300);
 
-        window.onload = () => {
-            typeWriter();
-            createPetals();
-            createHearts();
-            drawStars();
-        };
+        // 鼠标星星跟随
+        document.addEventListener('mousemove', (e) => {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = e.clientX + 'px';
+            star.style.top = e.clientY + 'px';
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 1500);
+        });
 
-        // 樱花瓣
-        function createPetals() {
-            for (let j = 0; j < 20; j++) {
-                const petal = document.createElement('div');
-                petal.classList.add('petal');
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = Math.random() * 12 + 12 + 's';
-                petal.style.animationDelay = Math.random() * 8 + 's';
-                petal.style.width = Math.random() * 15 + 15 + 'px';
-                petal.style.height = Math.random() * 20 + 25 + 'px';
-                document.body.appendChild(petal);
-            }
-        }
+        // 礼花特效
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        // 爱心飘浮
-        function createHearts() {
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = ['❤️', '💕', '💖', '💗', '💓'][Math.floor(Math.random() * 5)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 8 + 8 + 's';
-                document.body.appendChild(heart);
-
-                setTimeout(() => heart.remove(), 20000);
-            }, 600);
-        }
-
-        // 星空闪烁
-        function drawStars() {
-            const canvas = document.getElementById('stars');
-            const ctx = canvas.getContext('2d');
+        window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        });
 
-            const stars = [];
-            for (let k = 0; k < 300; k++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 1.8,
-                    alpha: Math.random()
+        const fireworks = [];
+        function Firework(x, y) {
+            this.x = x;
+            this.y = y;
+            this.particles = [];
+            for (let i = 0; i < 60; i++) {
+                this.particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.random() * 12 - 6,
+                    vy: Math.random() * 12 - 10,
+                    color: `hsl(${Math.random()*360}, 100%, 60%)`,
+                    life: 100
                 });
             }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                stars.forEach(star => {
-                    ctx.beginPath();
-                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-                    ctx.fill();
-
-                    star.alpha += (Math.random() - 0.5) * 0.05;
-                    if (star.alpha > 1) star.alpha = 1;
-                    if (star.alpha < 0.3) star.alpha = 0.3;
-                });
-                requestAnimationFrame(animate);
-            }
-            animate();
         }
-    </script>
-</body>
-</html>
+
+        function animateFireworks() {
+            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            fireworks.forEach((fw, i) => {
