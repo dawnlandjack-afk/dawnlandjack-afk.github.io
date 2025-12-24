@@ -20,46 +20,69 @@
         }
 
         .container {
-            text-align: center;
-            padding: 40px 25px;
-            max-width: 90%;
-            background: rgba(255, 255, 255, 0.75);
+            width: 90%;
+            max-width: 600px;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.78);
             border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.18);
             backdrop-filter: blur(12px);
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
             z-index: 10;
         }
 
         h1 {
-            font-size: 2.3em;
-            margin-bottom: 35px;
+            text-align: center;
+            font-size: 2.2em;
             color: #880e4f;
             letter-spacing: 2px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
 
-        .heart {
-            font-size: 3.8em;
-            margin: 35px 0;
+        .heart-top {
+            text-align: center;
+            font-size: 3.5em;
             color: #e91e63;
+            margin: 10px 0 20px;
+            flex-shrink: 0;
         }
 
-        .letter {
-            font-size: 1.18em;
+        /* 信纸主体区域 - 可滚动 + 固定高度 */
+        .letter-box {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
             line-height: 2.2;
+            font-size: 1.18em;
             text-align: left;
-            margin: 0 auto;
-            max-width: 800px;
+            word-wrap: break-word;
+        }
+
+        /* 自定义滚动条（更美观） */
+        .letter-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .letter-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .letter-box::-webkit-scrollbar-thumb {
+            background: rgba(136, 14, 79, 0.3);
+            border-radius: 3px;
         }
 
         .typewriter {
             text-indent: 2em;
-            margin: 20px 0;
         }
 
         .salutation {
             text-indent: 0 !important;
             font-size: 1.3em;
             margin-bottom: 30px;
+            text-align: center;
         }
 
         .closing {
@@ -69,12 +92,24 @@
             font-size: 1.3em;
         }
 
-        /* 隐藏光标（可选，如果你不喜欢闪烁的光标，可以删掉下面的 .cursor 样式） */
+        .heart-bottom {
+            text-align: center;
+            font-size: 3.5em;
+            color: #e91e63;
+            margin-top: 30px;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            flex-shrink: 0;
+        }
+
+        /* 闪烁光标 */
         .cursor {
             display: inline-block;
             width: 2px;
+            height: 1.2em;
             background-color: #4a148c;
             margin-left: 2px;
+            vertical-align: middle;
             animation: blink 1s infinite;
         }
 
@@ -83,7 +118,7 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* 飘落的樱花瓣 */
+        /* 樱花飘落 */
         .particles {
             position: absolute;
             top: 0;
@@ -100,16 +135,10 @@
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
             10% { opacity: 0.6; }
             90% { opacity: 0.6; }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
     </style>
 </head>
@@ -118,18 +147,15 @@
 
     <div class="container">
         <h1>2026年，给我的诗玉师妹</h1>
-        
-        <div class="heart">💕</div>
+        <div class="heart-top">💕</div>
 
-        <div class="letter" id="letter">
-            <!-- 文字将由 JavaScript 一个一个打出来 -->
-        </div>
+        <!-- 信件内容会在这里一个字一个字打出来 -->
+        <div class="letter-box" id="letter"></div>
 
-        <div class="heart" id="finalHeart" style="opacity:0;">💕💕💕</div>
+        <div class="heart-bottom" id="finalHeart">💕💕💕</div>
     </div>
 
     <script>
-        // 完整信件内容（保持原样，包括换行和段落）
         const fullText = `亲爱的诗玉师妹：
 
 从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
@@ -144,69 +170,71 @@
 师兄哥哥
 2026年1月1日`;
 
-        const letterElement = document.getElementById('letter');
+        const letterBox = document.getElementById('letter');
         const finalHeart = document.getElementById('finalHeart');
-
-        // 打字速度：每字约 80~120ms，这里取 100ms，阅读感自然
-        const typingSpeed = 100;
-
-        // 段落之间的额外停顿（ms）
-        const paragraphPause = 800;
-
         let i = 0;
+        const typingSpeed = 100;        // 每字间隔 100ms
+        const paragraphPause = 800;     // 段落间额外停顿
 
         function typeWriter() {
             if (i < fullText.length) {
                 const char = fullText[i];
 
-                // 创建一个 span 来包裹当前字符
                 const span = document.createElement('span');
                 span.textContent = char;
 
-                // 处理换行和段落
+                // 处理特殊格式
                 if (char === '\n') {
-                    letterElement.appendChild(document.createElement('br'));
-                    // 如果连续两个换行，说明是段落间空行，加暂停
+                    letterBox.appendChild(document.createElement('br'));
                     if (fullText[i + 1] === '\n') {
                         setTimeout(typeWriter, paragraphPause);
                         i++;
                         return;
                     }
-                } else if (char === '：' && fullText.substring(i-6, i+1) === '诗玉师妹：') {
-                    // 问候语特殊处理
-                    span.classList.add('salutation');
-                } else if (i > fullText.length - 30 && fullText.substring(i).includes('永远爱你的')) {
-                    // 落款部分
-                    span.classList.add('closing');
                 } else {
-                    span.classList.add('typewriter');
+                    // 问候语
+                    if (fullText.substring(i-6, i+1).includes('诗玉师妹：')) {
+                        span.classList.add('salutation');
+                    }
+                    // 落款
+                    else if (fullText.substring(i).startsWith('永远爱你的')) {
+                        span.classList.add('closing');
+                    }
+                    else {
+                        span.classList.add('typewriter');
+                    }
                 }
 
-                letterElement.appendChild(span);
+                letterBox.appendChild(span);
 
-                // 添加闪烁光标（只在最后）
+                // 最后一个字符后加光标
                 if (i === fullText.length - 1) {
                     const cursor = document.createElement('span');
                     cursor.classList.add('cursor');
                     cursor.innerHTML = '&nbsp;';
-                    letterElement.appendChild(cursor);
+                    letterBox.appendChild(cursor);
                 }
+
+                // 自动滚动到最新内容
+                letterBox.scrollTop = letterBox.scrollHeight;
 
                 i++;
                 setTimeout(typeWriter, typingSpeed);
             } else {
-                // 打完后显示最后的爱心
+                // 打完后显示底部爱心
                 finalHeart.style.opacity = 1;
-                finalHeart.style.transition = 'opacity 1.5s ease';
+                // 移除光标（可选）
+                const cursor = document.querySelector('.cursor');
+                if (cursor) cursor.remove();
             }
         }
 
-        // 页面加载后稍等一下开始打字（增加仪式感）
+        // 页面加载后 1 秒开始打字
         window.onload = () => {
             setTimeout(typeWriter, 1000);
         };
 
-        // 飘落樱花粒子
+        // 樱花飘落
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹'];
 
@@ -214,22 +242,17 @@
             const particle = document.createElement('div');
             particle.classList.add('particle');
             particle.textContent = petals[Math.floor(Math.random() * petals.length)];
-            
             particle.style.left = Math.random() * 100 + 'vw';
             particle.style.fontSize = (Math.random() * 15 + 25) + 'px';
             particle.style.animationDuration = (Math.random() * 8 + 10) + 's';
-            
             particlesContainer.appendChild(particle);
 
-            particle.addEventListener('animationend', () => {
-                particle.remove();
-            });
+            particle.addEventListener('animationend', () => particle.remove());
         }
 
         setInterval(createParticle, 600);
-
-        for (let i = 0; i < 12; i++) {
-            setTimeout(createParticle, i * 800);
+        for (let j = 0; j < 12; j++) {
+            setTimeout(createParticle, j * 800);
         }
     </script>
 </body>
