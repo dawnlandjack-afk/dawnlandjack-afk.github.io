@@ -11,70 +11,71 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to bottom, #0c1e3d, #1c4e8a);
             color: #ffffff;
-            text-align: center;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-            transition: background 0.5s;
+            justify-content: center;
+            overflow-y: auto; /* 允许滚动，但居中优先 */
         }
         .container {
-            max-width: 900px;
-            padding: 30px;
+            max-width: 90%;
+            width: 800px;
+            padding: 20px;
             background: rgba(12, 30, 61, 0.4);
             border-radius: 25px;
             box-shadow: 0 0 40px rgba(255, 182, 230, 0.5);
             border: 2px solid rgba(180, 220, 255, 0.6);
-            opacity: 0;
-            transition: opacity 1s;
+            text-align: center;
         }
-        .loaded .container { opacity: 1; }
         h1 {
-            font-size: 3.2em;
-            margin-bottom: 20px;
+            font-size: 2.8em;
+            margin: 10px 0;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
         .carousel {
-            margin: 40px 0;
-            max-width: 800px;
+            margin: 20px 0;
+            max-width: 100%;
+            height: 300px; /* 固定高度，手机上不占太多 */
             overflow: hidden;
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(255, 182, 230, 0.7);
         }
         .slides {
             display: flex;
+            width: 100%;
+            height: 100%;
             transition: transform 1.2s ease-in-out;
         }
         .slide img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover; /* 图片完美填充 */
             border-radius: 15px;
             border: 3px solid rgba(255, 204, 229, 0.7);
-            loading: lazy; /* 懒加载 */
         }
         .message {
-            font-size: 1.5em;
-            line-height: 2em;
-            margin: 40px 0;
-            padding: 25px;
+            font-size: 1.4em;
+            line-height: 1.8em;
+            margin: 20px 0;
+            padding: 20px;
             background: rgba(28, 78, 138, 0.3);
             border-radius: 20px;
             border: 1px solid rgba(255, 182, 230, 0.5);
         }
         .signature {
-            font-size: 2em;
-            margin-top: 50px;
+            font-size: 1.8em;
+            margin: 30px 0 10px;
             font-style: italic;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
         .hearts {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: -1;
+            top: 0;
+            left: 0;
         }
         .heart {
             position: absolute;
@@ -96,43 +97,29 @@
             font-size: 40px;
             cursor: pointer;
             z-index: 10;
-            opacity: 0.8;
             text-shadow: 0 0 12px rgba(255, 182, 230, 0.8);
-        }
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            color: #ffb6ee;
-            z-index: 20;
         }
     </style>
 </head>
 <body>
-    <div class="loading" id="loading">加载中，请稍等... ♥</div>
-    
     <audio id="bgMusic" loop preload="auto">
-        <!-- 换成体积更小、国内加速的浪漫钢琴曲 -->
         <source src="https://cdn.pixabay.com/download/audio/2023/12/15/audio_3b357d1f1e.mp3?filename=romantic-piano-174865.mp3" type="audio/mpeg">
     </audio>
 
     <div class="music-control" id="musicBtn" onclick="toggleMusic()">🎵</div>
 
     <div class="hearts" id="hearts"></div>
-    <div class="container" id="container">
+    <div class="container">
         <h1>亲爱的诗玉<br>2026 新年快乐！</h1>
         
         <div class="carousel">
             <div class="slides" id="slides">
-                <!-- 换成更稳定的国内可访问图片链接 -->
-                <div class="slide"><img src="https://img2.baidu.com/it/u=2979898470,3673180597&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="浪漫烟花情侣" loading="lazy"></div>
-                <div class="slide"><img src="https://img2.baidu.com/it/u=2345678901,1234567890&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="烟花剪影" loading="lazy"></div>
-                <div class="slide"><img src="https://img1.baidu.com/it/u=1234567890,987654321&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1422" alt="星空爱心" loading="lazy"></div>
-                <div class="slide"><img src="https://img3.baidu.com/it/u=3456789012,2345678901&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="浪漫星空" loading="lazy"></div>
-                <div class="slide"><img src="https://img2.baidu.com/it/u=4567890123,3456789012&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="2026烟火" loading="lazy"></div>
-                <div class="slide"><img src="https://img1.baidu.com/it/u=5678901234,4567890123&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=800" alt="粉色玫瑰爱心" loading="lazy"></div>
+                <div class="slide"><img src="https://thumbs.dreamstime.com/b/romantic-winter-fireworks-couple-celebrating-new-year-s-eve-breathtaking-scene-featuring-silhouetted-agnst-vibrant-sunset-407236789.jpg" alt="浪漫烟花情侣"></div>
+                <div class="slide"><img src="https://thumbs.dreamstime.com/b/romantic-couple-watches-fireworks-over-snowy-mountain-lake-night-magical-winter-scene-romantic-winter-night-scene-fireworks-355937750.jpg" alt="冬夜烟花"></div>
+                <div class="slide"><img src="https://thumbs.dreamstime.com/b/glowing-heart-made-stars-sparkling-blue-dark-background-411336336.jpg" alt="星空爱心"></div>
+                <div class="slide"><img src="https://images.stockcake.com/public/e/2/4/e249ec1d-414f-4ecb-a94a-17c5e8c84915_large/glowing-heart-dreams-stockcake.jpg" alt="梦幻发光心"></div>
+                <div class="slide"><img src="https://thumbs.dreamstime.com/b/happy-new-year-couple-love-under-spectacular-heart-fireworks-sunset-generativeai-413300990.jpg" alt="心形烟花"></div>
+                <div class="slide"><img src="https://thumbs.dreamstime.com/b/beautiful-arrangement-features-soft-pink-roses-heart-confetti-love-letter-laid-out-against-pastel-backdrop-romantic-flat-lay-401271164.jpg" alt="粉玫瑰心"></div>
             </div>
         </div>
 
@@ -159,30 +146,21 @@
     </div>
 
     <script>
-        // 加载完成后显示内容
-        window.onload = function() {
-            document.body.classList.add('loaded');
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('container').style.opacity = 1;
-            // 尝试自动播放音乐
-            const audio = document.getElementById('bgMusic');
-            audio.volume = 0.4;
-            audio.play().catch(() => {});
-        };
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        audio.volume = 0.4;
+        audio.play().catch(() => {});
 
         function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            const btn = document.getElementById('musicBtn');
             if (audio.paused) {
                 audio.play();
-                btn.innerHTML = '🎶';
+                musicBtn.innerHTML = '🎶';
             } else {
                 audio.pause();
-                btn.innerHTML = '🎵';
+                musicBtn.innerHTML = '🎵';
             }
         }
 
-        // 轮播（时间加长，减少负担）
         const slides = document.getElementById('slides');
         let current = 0;
         const total = slides.children.length;
@@ -191,7 +169,6 @@
             slides.style.transform = `translateX(-${current * 100}%)`;
         }, 5000);
 
-        // 飘心减少频率
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
@@ -205,7 +182,7 @@
             heart.style.animationDuration = 12 + Math.random() * 8 + 's';
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 20000);
-        }, 1200); // 从800ms改成1200ms，减少数量
+        }, 1200);
     </script>
 </body>
 </html>
