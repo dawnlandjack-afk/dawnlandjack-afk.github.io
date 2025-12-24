@@ -1,244 +1,161 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 圣诞快乐！🎄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026年，给我的诗玉师妹</title>
     <style>
         body {
             margin: 0;
+            padding: 0;
             height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: white;
+            background: linear-gradient(to bottom, #e0f7fa, #fff0f5);
+            font-family: '华文楷体', 'KaiTi', '微软雅黑', serif;
+            color: #4a148c;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            overflow: hidden;
             position: relative;
         }
 
-        /* 雪花 */
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: #fff;
-            font-size: 1.5em;
-            pointer-events: none;
-            animation: fall linear infinite;
-            opacity: 0.8;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
-        /* 主内容 */
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 60px;
+        .container {
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px 25px;
             max-width: 90%;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            backdrop-filter: blur(12px);
             z-index: 10;
         }
 
         h1 {
-            font-size: 4em;
-            margin: 0 0 20px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            font-size: 2.3em;
+            margin-bottom: 35px;
+            color: #880e4f;
+            letter-spacing: 2px;
         }
 
-        p {
-            font-size: 1.8em;
+        .letter {
+            font-size: 1.18em;
+            line-height: 2.2;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 800px;
+            text-indent: 2em;
+        }
+
+        .letter p {
             margin: 20px 0;
+            text-indent: 2em;
         }
 
-        button {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.4em;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
+        .letter .salutation {
+            text-indent: 0;
+            font-size: 1.3em;
+            margin-bottom: 30px;
         }
 
-        button:hover {
-            transform: scale(1.1);
-            background: #c0392b;
+        .letter .closing {
+            text-indent: 0;
+            text-align: right;
+            margin-top: 40px;
+            font-size: 1.3em;
         }
 
-        /* 个性化祝福 */
-        #personalMessage {
-            font-size: 2.2em;
-            margin-top: 30px;
-            min-height: 80px;
-            animation: fadeIn 2s;
+        .heart {
+            font-size: 3.8em;
+            animation: beat 2s infinite ease-in-out;
+            margin: 35px 0;
+            color: #e91e63;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
         }
 
-        /* 模态框 */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        .modal-content {
-            background: white;
-            color: #333;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-
-        /* 音乐开关 */
-        #musicToggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2em;
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        /* 鼠标星星 */
-        .star {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            box-shadow: 0 0 8px white;
-            animation: twinkle 1.5s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            from { opacity: 0.4; }
-            to { opacity: 1; }
-        }
-
-        /* 礼花画布 */
-        canvas {
+        /* 飘落的樱花瓣 */
+        .particles {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 5;
+        }
+
+        .particle {
+            position: absolute;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="fireworks"></canvas>
+    <div class="particles" id="particles"></div>
 
-    <div id="musicToggle">🔔</div>
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.jsdelivr.net/gh/moeplayer/CDN@master/jingle-bells.mp3" type="audio/mpeg">
-    </audio>
+    <div class="container">
+        <h1>2026年，给我的诗玉师妹</h1>
+        
+        <div class="heart">💕</div>
 
-    <div class="card">
-        <h1>Merry Christmas!</h1>
-        <p>2025年圣诞节</p>
-        <p>愿平安、喜乐与爱常伴你左右 🎄✨</p>
-        <button id="wishBtn">发送祝福</button>
-        <div id="personalMessage"></div>
-    </div>
-
-    <!-- 模态框 -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2>定制你的圣诞祝福</h2>
-            <input type="text" id="nameInput" placeholder="你的名字（可选）">
-            <textarea id="messageInput" rows="4" placeholder="写下你的祝福..."></textarea>
-            <button id="submitWish">发送</button>
-            <button id="closeModal" style="background:#95a5a6; margin-top:10px;">取消</button>
+        <div class="letter">
+            <p class="salutation">亲爱的诗玉师妹：</p>
+            
+            <p>从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。</p>
+            
+            <p>每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。</p>
+            
+            <p>我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。</p>
+            
+            <p>诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。</p>
+            
+            <p class="closing">永远爱你的，<br>师兄哥哥<br>2026年1月1日</p>
         </div>
+
+        <div class="heart">💕💕💕</div>
     </div>
 
     <script>
-        // 雪花
-        function createSnowflake() {
-            const snow = document.createElement('div');
-            snow.classList.add('snowflake');
-            snow.textContent = ['❄', '✳', '❅', '❆'][Math.floor(Math.random() * 4)];
-            snow.style.left = Math.random() * 100 + 'vw';
-            snow.style.fontSize = Math.random() * 1 + 1.2 + 'em';
-            snow.style.animationDuration = Math.random() * 8 + 7 + 's';
-            snow.style.animationDelay = Math.random() * 5 + 's';
-            document.body.appendChild(snow);
+        const particlesContainer = document.getElementById('particles');
+        const petals = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹'];
 
-            setTimeout(() => snow.remove(), 15000);
-        }
-        setInterval(createSnowflake, 300);
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.textContent = petals[Math.floor(Math.random() * petals.length)];
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 15 + 25) + 'px';
+            particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            
+            particlesContainer.appendChild(particle);
 
-        // 鼠标星星跟随
-        document.addEventListener('mousemove', (e) => {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.left = e.clientX + 'px';
-            star.style.top = e.clientY + 'px';
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1500);
-        });
-
-        // 礼花特效
-        const canvas = document.getElementById('fireworks');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        const fireworks = [];
-        function Firework(x, y) {
-            this.x = x;
-            this.y = y;
-            this.particles = [];
-            for (let i = 0; i < 60; i++) {
-                this.particles.push({
-                    x: x,
-                    y: y,
-                    vx: Math.random() * 12 - 6,
-                    vy: Math.random() * 12 - 10,
-                    color: `hsl(${Math.random()*360}, 100%, 60%)`,
-                    life: 100
-                });
-            }
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
         }
 
-        function animateFireworks() {
-            ctx.fillStyle = 'rgba(0,0,0,0.15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        setInterval(createParticle, 500);
 
-            fireworks.forEach((fw, i) => {
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createParticle, i * 600);
+        }
+    </script>
+</body>
+</html>
