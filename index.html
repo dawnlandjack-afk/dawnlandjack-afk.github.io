@@ -35,20 +35,12 @@
             margin-bottom: 35px;
             color: #880e4f;
             letter-spacing: 2px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
         }
 
         .heart {
             font-size: 3.8em;
             margin: 35px 0;
             color: #e91e63;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards 0.5s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
         }
 
         .letter {
@@ -57,26 +49,38 @@
             text-align: left;
             margin: 0 auto;
             max-width: 800px;
-            text-indent: 2em;
         }
 
-        .letter p {
+        .typewriter {
+            text-indent: 2em;
             margin: 20px 0;
-            text-indent: 2em;
-            opacity: 0;
         }
 
-        .letter .salutation {
-            text-indent: 0;
+        .salutation {
+            text-indent: 0 !important;
             font-size: 1.3em;
             margin-bottom: 30px;
         }
 
-        .letter .closing {
-            text-indent: 0;
+        .closing {
+            text-indent: 0 !important;
             text-align: right;
             margin-top: 40px;
             font-size: 1.3em;
+        }
+
+        /* 隐藏光标（可选，如果你不喜欢闪烁的光标，可以删掉下面的 .cursor 样式） */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #4a148c;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         /* 飘落的樱花瓣 */
@@ -117,24 +121,91 @@
         
         <div class="heart">💕</div>
 
-        <div class="letter">
-            <p class="salutation">亲爱的诗玉师妹：</p>
-            
-            <p>从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。</p>
-            
-            <p>每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。</p>
-            
-            <p>我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。</p>
-            
-            <p>诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。</p>
-            
-            <p class="closing">永远爱你的，<br>师兄哥哥<br>2026年1月1日</p>
+        <div class="letter" id="letter">
+            <!-- 文字将由 JavaScript 一个一个打出来 -->
         </div>
 
-        <div class="heart">💕💕💕</div>
+        <div class="heart" id="finalHeart" style="opacity:0;">💕💕💕</div>
     </div>
 
     <script>
+        // 完整信件内容（保持原样，包括换行和段落）
+        const fullText = `亲爱的诗玉师妹：
+
+从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
+
+每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
+
+我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
+
+诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
+
+永远爱你的，
+师兄哥哥
+2026年1月1日`;
+
+        const letterElement = document.getElementById('letter');
+        const finalHeart = document.getElementById('finalHeart');
+
+        // 打字速度：每字约 80~120ms，这里取 100ms，阅读感自然
+        const typingSpeed = 100;
+
+        // 段落之间的额外停顿（ms）
+        const paragraphPause = 800;
+
+        let i = 0;
+
+        function typeWriter() {
+            if (i < fullText.length) {
+                const char = fullText[i];
+
+                // 创建一个 span 来包裹当前字符
+                const span = document.createElement('span');
+                span.textContent = char;
+
+                // 处理换行和段落
+                if (char === '\n') {
+                    letterElement.appendChild(document.createElement('br'));
+                    // 如果连续两个换行，说明是段落间空行，加暂停
+                    if (fullText[i + 1] === '\n') {
+                        setTimeout(typeWriter, paragraphPause);
+                        i++;
+                        return;
+                    }
+                } else if (char === '：' && fullText.substring(i-6, i+1) === '诗玉师妹：') {
+                    // 问候语特殊处理
+                    span.classList.add('salutation');
+                } else if (i > fullText.length - 30 && fullText.substring(i).includes('永远爱你的')) {
+                    // 落款部分
+                    span.classList.add('closing');
+                } else {
+                    span.classList.add('typewriter');
+                }
+
+                letterElement.appendChild(span);
+
+                // 添加闪烁光标（只在最后）
+                if (i === fullText.length - 1) {
+                    const cursor = document.createElement('span');
+                    cursor.classList.add('cursor');
+                    cursor.innerHTML = '&nbsp;';
+                    letterElement.appendChild(cursor);
+                }
+
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                // 打完后显示最后的爱心
+                finalHeart.style.opacity = 1;
+                finalHeart.style.transition = 'opacity 1.5s ease';
+            }
+        }
+
+        // 页面加载后稍等一下开始打字（增加仪式感）
+        window.onload = () => {
+            setTimeout(typeWriter, 1000);
+        };
+
         // 飘落樱花粒子
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹'];
@@ -146,7 +217,7 @@
             
             particle.style.left = Math.random() * 100 + 'vw';
             particle.style.fontSize = (Math.random() * 15 + 25) + 'px';
-            particle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+            particle.style.animationDuration = (Math.random() * 8 + 10) + 's';
             
             particlesContainer.appendChild(particle);
 
@@ -157,33 +228,9 @@
 
         setInterval(createParticle, 600);
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 12; i++) {
             setTimeout(createParticle, i * 800);
         }
-
-        // 逐段淡入显示文字，像手写信一样慢慢显现
-        const paragraphs = document.querySelectorAll('.letter p');
-        let delay = 1500; // 标题和第一个心出现后开始
-
-        paragraphs.forEach((p, index) => {
-            // 每段的显示时间根据文字长度估算（大约每20字需要4-5秒阅读时间）
-            const textLength = p.textContent.length;
-            const readTime = Math.max(4000, textLength * 100); // 基础4秒 + 每字100ms
-
-            setTimeout(() => {
-                p.style.opacity = 1;
-                p.style.transition = 'opacity 1.2s ease';
-            }, delay);
-
-            delay += readTime + 800; // 加上段落间间隔
-        });
-
-        // 最后一个心在信写完后出现
-        const lastHeart = document.querySelectorAll('.heart')[1];
-        setTimeout(() => {
-            lastHeart.style.opacity = 1;
-            lastHeart.style.transition = 'opacity 1.5s ease';
-        }, delay + 500);
     </script>
 </body>
 </html>
