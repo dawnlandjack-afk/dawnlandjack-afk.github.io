@@ -35,6 +35,20 @@
             margin-bottom: 35px;
             color: #880e4f;
             letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .heart {
+            font-size: 3.8em;
+            margin: 35px 0;
+            color: #e91e63;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         .letter {
@@ -49,6 +63,7 @@
         .letter p {
             margin: 20px 0;
             text-indent: 2em;
+            opacity: 0;
         }
 
         .letter .salutation {
@@ -62,18 +77,6 @@
             text-align: right;
             margin-top: 40px;
             font-size: 1.3em;
-        }
-
-        .heart {
-            font-size: 3.8em;
-            animation: beat 2s infinite ease-in-out;
-            margin: 35px 0;
-            color: #e91e63;
-        }
-
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.12); }
         }
 
         /* 飘落的樱花瓣 */
@@ -132,6 +135,7 @@
     </div>
 
     <script>
+        // 飘落樱花粒子
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹'];
 
@@ -151,11 +155,35 @@
             });
         }
 
-        setInterval(createParticle, 500);
+        setInterval(createParticle, 600);
 
         for (let i = 0; i < 10; i++) {
-            setTimeout(createParticle, i * 600);
+            setTimeout(createParticle, i * 800);
         }
+
+        // 逐段淡入显示文字，像手写信一样慢慢显现
+        const paragraphs = document.querySelectorAll('.letter p');
+        let delay = 1500; // 标题和第一个心出现后开始
+
+        paragraphs.forEach((p, index) => {
+            // 每段的显示时间根据文字长度估算（大约每20字需要4-5秒阅读时间）
+            const textLength = p.textContent.length;
+            const readTime = Math.max(4000, textLength * 100); // 基础4秒 + 每字100ms
+
+            setTimeout(() => {
+                p.style.opacity = 1;
+                p.style.transition = 'opacity 1.2s ease';
+            }, delay);
+
+            delay += readTime + 800; // 加上段落间间隔
+        });
+
+        // 最后一个心在信写完后出现
+        const lastHeart = document.querySelectorAll('.heart')[1];
+        setTimeout(() => {
+            lastHeart.style.opacity = 1;
+            lastHeart.style.transition = 'opacity 1.5s ease';
+        }, delay + 500);
     </script>
 </body>
 </html>
