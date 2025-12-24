@@ -5,249 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026年，给我的诗玉师妹</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: linear-gradient(to bottom, #e0f7fa, #fff0f5);
-            font-family: '华文楷体', 'KaiTi', '微软雅黑', serif;
-            color: #4a148c;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 600px;
-            height: 85vh;
-            background: rgba(255, 255, 255, 0.78);
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.18);
-            backdrop-filter: blur(12px);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 2.2em;
-            color: #880e4f;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            flex-shrink: 0;
-        }
-
-        .heart-top {
-            text-align: center;
-            font-size: 3.5em;
-            color: #e91e63;
-            margin-bottom: 20px;
-            flex-shrink: 0;
-        }
-
-        /* 文字信件区域 */
-        .letter-box {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 0 10px 20px;
-            line-height: 2.3;
-            font-size: 1.18em;
-            text-align: left;
-            word-wrap: break-word;
-            margin-bottom: 20px;
-        }
-
-        .letter-box::-webkit-scrollbar {
-            width: 5px;
-        }
-        .letter-box::-webkit-scrollbar-thumb {
-            background: rgba(136, 14, 79, 0.4);
-            border-radius: 3px;
-        }
-
-        .typewriter { text-indent: 2em; }
-        .salutation { text-indent: 0 !important; font-size: 1.3em; margin: 20px 0 30px; text-align: center; }
-        .closing { text-indent: 0 !important; text-align: right; margin-top: 40px; font-size: 1.3em; }
-
-        .cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.2em;
-            background-color: #4a148c;
-            margin-left: 2px;
-            vertical-align: middle;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 0%,50% {opacity:1} 51%,100% {opacity:0} }
-
-        /* 图片轮播区域（文字打完后出现） */
-        .photos-section {
-            opacity: 0;
-            transition: opacity 2s ease;
-            flex-shrink: 0;
-            text-align: center;
-        }
-
-        .photos-title {
-            font-size: 1.3em;
-            color: #880e4f;
-            margin-bottom: 15px;
-        }
-
-        .photos-carousel {
-            display: flex;
-            overflow-x: auto;
-            gap: 12px;
-            padding: 10px 0;
-            scrollbar-width: none; /* Firefox 隐藏滚动条 */
-        }
-
-        .photos-carousel::-webkit-scrollbar { display: none; }
-
-        .photo-item {
-            flex-shrink: 0;
-            width: 260px;
-            height: 260px;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .heart-bottom {
-            text-align: center;
-            font-size: 3.5em;
-            color: #e91e63;
-            margin-top: 20px;
-            flex-shrink: 0;
-        }
-
-        /* 樱花 */
-        .particles {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            opacity: 0.6;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
+        body { margin:0; padding:0; height:100vh; background:linear-gradient(to bottom,#e0f7fa,#fff0f5); font-family:'华文楷体','KaiTi','微软雅黑',serif; color:#4a148c; display:flex; justify-content:center; align-items:center; overflow:hidden; position:relative; }
+        .container { width:90%; max-width:600px; height:85vh; background:rgba(255,255,255,0.78); border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.18); backdrop-filter:blur(12px); padding:30px 20px; display:flex; flex-direction:column; z-index:10; }
+        h1 { text-align:center; font-size:2.2em; color:#880e4f; letter-spacing:2px; margin-bottom:15px; flex-shrink:0; }
+        .heart-top { text-align:center; font-size:3.5em; color:#e91e63; margin-bottom:20px; flex-shrink:0; }
+        .letter-box { flex:1; overflow-y:auto; overflow-x:hidden; padding:0 10px 20px; line-height:2.3; font-size:1.18em; text-align:left; word-wrap:break-word; margin-bottom:20px; }
+        .letter-box::-webkit-scrollbar { width:5px; }
+        .letter-box::-webkit-scrollbar-thumb { background:rgba(136,14,79,0.4); border-radius:3px; }
+        .typewriter { text-indent:2em; }
+        .salutation { text-indent:0 !important; font-size:1.3em; margin:20px 0 30px; text-align:center; }
+        .closing { text-indent:0 !important; text-align:right; margin-top:40px; font-size:1.3em; }
+        .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:2px; vertical-align:middle; animation:blink 1s infinite; }
+        @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+        .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; }
+        .photos-title { font-size:1.3em; color:#880e4f; margin-bottom:15px; }
+        .photos-carousel { display:flex; overflow-x:auto; gap:12px; padding:10px 0; scrollbar-width:none; }
+        .photos-carousel::-webkit-scrollbar { display:none; }
+        .photo-item { flex-shrink:0; width:260px; height:260px; border-radius:18px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+        .photo-item img { width:100%; height:100%; object-fit:cover; }
+        .heart-bottom { text-align:center; font-size:3.5em; color:#e91e63; margin-top:20px; flex-shrink:0; }
+        .particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+        .particle { position:absolute; opacity:0.6; animation:fall linear infinite; }
+        @keyframes fall { 0%{transform:translateY(-100px) rotate(0deg);opacity:0} 10%{opacity:0.6} 90%{opacity:0.6} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
-
     <div class="container">
         <h1>2026年，给我的诗玉师妹</h1>
-        <div class="heart-top">💕</div>
-
-        <!-- 纯文字信件区域 -->
+        <div class="heart-top"></div>
         <div class="letter-box" id="letter"></div>
-
-        <!-- 图片回忆区（打完字后显示） -->
         <div class="photos-section" id="photosSection">
             <div class="photos-title">我们的甜蜜回忆</div>
-            <div class="photos-carousel" id="photosCarousel">
-                <!-- JS 动态插入图片 -->
-            </div>
+            <div class="photos-carousel" id="photosCarousel"></div>
         </div>
-
-        <div class="heart-bottom">💕💕💕</div>
+        <div class="heart-bottom"></div>
     </div>
-
     <script>
         const fullText = `亲爱的诗玉师妹：
-
 从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
-
 每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
-
 我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
-
 诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
-
 永远爱你的，
 师兄哥哥
 2026年1月1日`;
-
-        // 稳定图床链接（sm.ms，微信加载极佳）
         const photoUrls = [
-            "https://s2.loli.net/2025/12/25/9vQbYkZ4oJ1rLhD.jpg",  // 牵手蓝玫瑰
-            "https://s2.loli.net/2025/12/25/5nX6pL9vZ3cR2jM.jpg",  // 室内温馨
-            "https://s2.loli.net/2025/12/25/8kWqVJ3mP7tN6xL.jpg",  // 草坪比心
-            "https://s2.loli.net/2025/12/25/4hR9bYvX2pL8kZJ.jpg",  // 夜场甜蜜1
-            "https://s2.loli.net/2025/12/25/7jM3qP6vN9tR5kX.jpg",  // 夜场甜蜜2
-            "https://s2.loli.net/2025/12/25/2xL9kZ5vJ7pQ8rN.jpg"   // 侧颜
+            "https://s2.loli.net/2025/12/25/9vQbYkZ4oJ1rLhD.jpg",
+            "https://s2.loli.net/2025/12/25/5nX6pL9vZ3cR2jM.jpg",
+            "https://s2.loli.net/2025/12/25/8kWqVJ3mP7tN6xL.jpg",
+            "https://s2.loli.net/2025/12/25/4hR9bYvX2pL8kZJ.jpg",
+            "https://s2.loli.net/2025/12/25/7jM3qP6vN9tR5kX.jpg",
+            "https://s2.loli.net/2025/12/25/2xL9kZ5vJ7pQ8rN.jpg"
         ];
-
         const letterBox = document.getElementById('letter');
         const photosSection = document.getElementById('photosSection');
         const photosCarousel = document.getElementById('photosCarousel');
         let i = 0;
         const typingSpeed = 100;
         const paragraphPause = 800;
-
         function typeWriter() {
             if (i < fullText.length) {
                 const char = fullText[i];
-
                 const span = document.createElement('span');
                 span.textContent = char;
-
                 if (char === '\n') {
                     letterBox.appendChild(document.createElement('br'));
-                    if (fullText[i + 1] === '\n') {
-                        setTimeout(typeWriter, paragraphPause);
-                        i++;
-                        return;
-                    }
+                    if (fullText[i + 1] === '\n') { setTimeout(typeWriter, paragraphPause); i++; return; }
                 } else {
-                    if (fullText.substring(i-6, i+1).includes('诗玉师妹：')) {
-                        span.classList.add('salutation');
-                    } else if (fullText.substring(i).startsWith('永远爱你的')) {
-                        span.classList.add('closing');
-                    } else {
-                        span.classList.add('typewriter');
-                    }
+                    if (fullText.substring(i-6, i+1).includes('诗玉师妹：')) span.classList.add('salutation');
+                    else if (fullText.substring(i).startsWith('永远爱你的')) span.classList.add('closing');
+                    else span.classList.add('typewriter');
                 }
-
                 letterBox.appendChild(span);
-
                 if (i === fullText.length - 1) {
                     const cursor = document.createElement('span');
                     cursor.classList.add('cursor');
                     cursor.innerHTML = '&nbsp;';
                     letterBox.appendChild(cursor);
                 }
-
                 letterBox.scrollTop = letterBox.scrollHeight;
                 i++;
                 setTimeout(typeWriter, typingSpeed);
             } else {
-                // 打完字后：移除光标，显示图片区和底部爱心
                 const cursor = document.querySelector('.cursor');
                 if (cursor) cursor.remove();
-
-                // 插入图片
                 photoUrls.forEach(url => {
                     const item = document.createElement('div');
                     item.className = 'photo-item';
@@ -256,33 +98,25 @@
                     item.appendChild(img);
                     photosCarousel.appendChild(item);
                 });
-
-                // 显示图片区
-                setTimeout(() => {
-                    photosSection.style.opacity = 1;
-                }, 500);
+                setTimeout(() => { photosSection.style.opacity = 1; }, 500);
             }
         }
-
-        window.onload = () => {
-            setTimeout(typeWriter, 1000);
-        };
-
-        // 樱花飘落
+        window.onload = () => setTimeout(typeWriter, 1000);
         const particlesContainer = document.getElementById('particles');
-        const petals = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹'];
+        const petals = ['','','','','️',''];
         function createParticle() {
             const p = document.createElement('div');
             p.classList.add('particle');
-            p.textContent = petals[Math.floor(Math.random() * petals.length)];
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.fontSize = (Math.random() * 15 + 25) + 'px';
-            p.style.animationDuration = (Math.random() * 8 + 10) + 's';
+            p.textContent = petals[Math.floor(Math.random()*petals.length)];
+            p.style.left = Math.random()*100 + 'vw';
+            p.style.fontSize = (Math.random()*15 + 25) + 'px';
+            p.style.animationDuration = (Math.random()*8 + 10) + 's';
             particlesContainer.appendChild(p);
             p.addEventListener('animationend', () => p.remove());
         }
         setInterval(createParticle, 600);
-        for (let j = 0; j < 12; j++) setTimeout(createParticle, j * 800);
+        for (let j=0; j<12; j++) setTimeout(createParticle, j*800);
     </script>
 </body>
 </html>
+
