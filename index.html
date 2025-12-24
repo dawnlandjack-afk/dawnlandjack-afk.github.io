@@ -7,15 +7,16 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to bottom, #0c1e3d, #1c4e8a);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            overflow-y: auto; /* 允许滚动，但居中优先 */
+            justify-content: flex-start;
+            overflow-y: auto;
         }
         .container {
             max-width: 90%;
@@ -29,34 +30,33 @@
         }
         h1 {
             font-size: 2.8em;
-            margin: 10px 0;
+            margin: 10px 0 20px;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
-        .carousel {
-            margin: 20px 0;
-            max-width: 100%;
-            height: 300px; /* 固定高度，手机上不占太多 */
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 182, 230, 0.7);
-        }
-        .slides {
+        .photos {
             display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 1.2s ease-in-out;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+            align-items: center;
         }
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 图片完美填充 */
-            border-radius: 15px;
+        .photo-frame {
+            width: 80%;
+            max-width: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(255, 182, 230, 0.6);
             border: 3px solid rgba(255, 204, 229, 0.7);
+        }
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         .message {
             font-size: 1.4em;
             line-height: 1.8em;
-            margin: 20px 0;
+            margin: 30px 0;
             padding: 20px;
             background: rgba(28, 78, 138, 0.3);
             border-radius: 20px;
@@ -64,7 +64,7 @@
         }
         .signature {
             font-size: 1.8em;
-            margin: 30px 0 10px;
+            margin: 20px 0 10px;
             font-style: italic;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
@@ -112,15 +112,14 @@
     <div class="container">
         <h1>亲爱的诗玉<br>2026 新年快乐！</h1>
         
-        <div class="carousel">
-            <div class="slides" id="slides">
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/romantic-winter-fireworks-couple-celebrating-new-year-s-eve-breathtaking-scene-featuring-silhouetted-agnst-vibrant-sunset-407236789.jpg" alt="浪漫烟花情侣"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/romantic-couple-watches-fireworks-over-snowy-mountain-lake-night-magical-winter-scene-romantic-winter-night-scene-fireworks-355937750.jpg" alt="冬夜烟花"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/glowing-heart-made-stars-sparkling-blue-dark-background-411336336.jpg" alt="星空爱心"></div>
-                <div class="slide"><img src="https://images.stockcake.com/public/e/2/4/e249ec1d-414f-4ecb-a94a-17c5e8c84915_large/glowing-heart-dreams-stockcake.jpg" alt="梦幻发光心"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/happy-new-year-couple-love-under-spectacular-heart-fireworks-sunset-generativeai-413300990.jpg" alt="心形烟花"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/beautiful-arrangement-features-soft-pink-roses-heart-confetti-love-letter-laid-out-against-pastel-backdrop-romantic-flat-lay-401271164.jpg" alt="粉玫瑰心"></div>
-            </div>
+        <div class="photos">
+            <!-- 6张照片依次在框里 -->
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/romantic-winter-fireworks-couple-celebrating-new-year-s-eve-breathtaking-scene-featuring-silhouetted-agnst-vibrant-sunset-407236789.jpg" alt="浪漫烟花情侣"></div>
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-fireworks-night-captivating-illustration-three-heart-shaped-fireworks-exploding-against-dark-night-sky-397643598.jpg" alt="心形烟花"></div>
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-constellation-sparkles-night-sky-over-mountain-landscape-romantic-starry-love-concept-beautiful-nature-scenery-385718207.jpg" alt="星空爱心"></div>
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/silhouette-couple-romantic-sunset-time-meadow-have-beauty-pink-blue-sky-97930495.jpg" alt="牵手剪影"></div>
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/romantic-arrangement-pink-roses-heart-shaped-decoration-soft-light-setting-st-valentines-gift-concept-beautiful-357919812.jpg" alt="粉玫瑰心"></div>
+            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/happy-new-year-couple-love-under-spectacular-heart-fireworks-sunset-generativeai-413300990.jpg" alt="新年心形烟花"></div>
         </div>
 
         <div class="message">
@@ -160,14 +159,6 @@
                 musicBtn.innerHTML = '🎵';
             }
         }
-
-        const slides = document.getElementById('slides');
-        let current = 0;
-        const total = slides.children.length;
-        setInterval(() => {
-            current = (current + 1) % total;
-            slides.style.transform = `translateX(-${current * 100}%)`;
-        }, 5000);
 
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
