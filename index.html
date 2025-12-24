@@ -27,6 +27,7 @@
             box-shadow: 0 0 40px rgba(255, 182, 230, 0.5);
             border: 2px solid rgba(180, 220, 255, 0.6);
             text-align: center;
+            position: relative;
         }
         h1 {
             font-size: 2.8em;
@@ -70,9 +71,20 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 182, 230, 0.5);
             min-height: 300px;
-            opacity: 1;
             text-align: left;
             position: relative;
+            overflow: hidden;
+        }
+        .type-heart {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            animation: heartFloat 2s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes heartFloat {
+            0% { opacity: 1; transform: translateY(0) scale(0.8); }
+            100% { opacity: 0; transform: translateY(-40px) scale(1.2); }
         }
         .signature {
             font-size: 1.8em;
@@ -112,19 +124,6 @@
             z-index: 10;
             text-shadow: 0 0 12px rgba(255, 182, 230, 0.8);
         }
-        .cursor {
-            display: inline-block;
-            background-color: #ffb6ee;
-            margin-left: 4px;
-            width: 2px;
-            height: 1.2em;
-            vertical-align: middle;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -139,12 +138,12 @@
         <h1 id="title">亲爱的诗玉<br>2026 新年快乐！</h1>
         
         <div class="photos" id="photos">
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/romantic-winter-fireworks-couple-celebrating-new-year-s-eve-breathtaking-scene-featuring-silhouetted-agnst-vibrant-sunset-407236789.jpg" alt="浪漫烟花情侣"></div>
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-fireworks-night-captivating-illustration-three-heart-shaped-fireworks-exploding-against-dark-night-sky-397643598.jpg" alt="心形烟花"></div>
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-constellation-sparkles-night-sky-over-mountain-landscape-romantic-starry-love-concept-beautiful-nature-scenery-385718207.jpg" alt="星空爱心"></div>
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/silhouette-couple-romantic-sunset-time-meadow-have-beauty-pink-blue-sky-97930495.jpg" alt="牵手剪影"></div>
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/romantic-arrangement-pink-roses-heart-shaped-decoration-soft-light-setting-st-valentines-gift-concept-beautiful-357919812.jpg" alt="粉玫瑰心"></div>
-            <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/happy-new-year-couple-love-under-spectacular-heart-fireworks-sunset-generativeai-413300990.jpg" alt="新年心形烟花"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-1.jpeg" alt="周年纪念看电影"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-2.jpeg" alt="足球场甜蜜自拍"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-3.jpeg" alt="比心手势"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-4.jpeg" alt="牵手捧花"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-5.jpeg" alt="握拳交扣"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-6.jpeg" alt="爱心包围花束"></div>
         </div>
 
         <div class="message" id="message"></div>
@@ -169,7 +168,7 @@
             }
         }
 
-        // 飘心特效
+        // 背景飘心
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
@@ -213,7 +212,7 @@
             setTimeout(typeMessage, photoFrames.length * 400 + 800);
         }
 
-        // 告白文字逐字打字机效果
+        // 告白文字 + 每打一字出现一个小爱心
         const fullText = `亲爱的诗玉，
 
 新的一年又来了，这是属于我们的2026年。
@@ -242,20 +241,33 @@
                     messageDiv.innerHTML += '<br>';
                 } else {
                     messageDiv.innerHTML += char;
+
+                    // 每打一个可见字符，就创建一个小爱心
+                    if (char !== ' ') { // 空格不加爱心，避免太多
+                        createTypeHeart();
+                    }
                 }
                 index++;
-                // 换行后稍慢，更自然
                 const delay = char === '\n' ? 500 : (Math.random() * 50 + 80);
                 setTimeout(typeMessage, delay);
             } else {
-                // 打完后移除光标，显示签名
-                messageDiv.innerHTML = messageDiv.innerHTML.replace(/<span class="cursor"><\/span>$/, '');
                 setTimeout(() => {
                     document.getElementById('signature').style.opacity = 1;
                 }, 1000);
             }
-            // 添加闪烁光标
-            messageDiv.innerHTML = messageDiv.innerHTML.replace(/<span class="cursor"><\/span>$/, '') + '<span class="cursor"></span>';
+        }
+
+        // 创建打字时的小爱心
+        function createTypeHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('type-heart');
+            const colors = ['#ffb6ee', '#ffffff', '#a0d8ff'];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.innerHTML = '♥';
+            heart.style.left = (Math.random() * 80 + 10) + '%'; // 随机横向位置
+            heart.style.top = (messageDiv.scrollHeight - 30) + 'px'; // 靠近当前文字底部
+            messageDiv.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
         }
     </script>
 </body>
