@@ -27,7 +27,6 @@
             box-shadow: 0 0 40px rgba(255, 182, 230, 0.5);
             border: 2px solid rgba(180, 220, 255, 0.6);
             text-align: center;
-            position: relative;
         }
         h1 {
             font-size: 2.8em;
@@ -70,10 +69,10 @@
             background: rgba(28, 78, 138, 0.3);
             border-radius: 20px;
             border: 1px solid rgba(255, 182, 230, 0.5);
-            min-height: 300px;
             text-align: left;
             position: relative;
             overflow: hidden;
+            min-height: 300px;
         }
         .type-heart {
             position: absolute;
@@ -138,12 +137,13 @@
         <h1 id="title">亲爱的诗玉<br>2026 新年快乐！</h1>
         
         <div class="photos" id="photos">
-            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-1.jpeg" alt="周年纪念看电影"></div>
-            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-2.jpeg" alt="足球场甜蜜自拍"></div>
-            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-3.jpeg" alt="比心手势"></div>
+            <!-- 你的6张私人照片 -->
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-1.jpeg" alt="周年纪念"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-2.jpeg" alt="足球场自拍"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-3.jpeg" alt="比心"></div>
             <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-4.jpeg" alt="牵手捧花"></div>
             <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-5.jpeg" alt="握拳交扣"></div>
-            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-6.jpeg" alt="爱心包围花束"></div>
+            <div class="photo-frame"><img src="https://cdn.grok.x.ai/grok/attachments/2025-12-24-08-32-00-6.jpeg" alt="爱心花束"></div>
         </div>
 
         <div class="message" id="message"></div>
@@ -152,7 +152,6 @@
     </div>
 
     <script>
-        // 背景音乐
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         audio.volume = 0.4;
@@ -184,7 +183,7 @@
             setTimeout(() => heart.remove(), 20000);
         }, 1200);
 
-        // 标题逐字出现
+        // 标题逐字
         const title = document.getElementById('title');
         const titleText = title.innerHTML;
         title.innerHTML = '';
@@ -212,7 +211,7 @@
             setTimeout(typeMessage, photoFrames.length * 400 + 800);
         }
 
-        // 告白文字 + 每打一字出现一个小爱心
+        // 告白文字 + 每字出现一个小爱心
         const fullText = `亲爱的诗玉，
 
 新的一年又来了，这是属于我们的2026年。
@@ -241,9 +240,7 @@
                     messageDiv.innerHTML += '<br>';
                 } else {
                     messageDiv.innerHTML += char;
-
-                    // 每打一个可见字符，就创建一个小爱心
-                    if (char !== ' ') { // 空格不加爱心，避免太多
+                    if (char !== ' ') {
                         createTypeHeart();
                     }
                 }
@@ -257,15 +254,14 @@
             }
         }
 
-        // 创建打字时的小爱心
         function createTypeHeart() {
             const heart = document.createElement('div');
             heart.classList.add('type-heart');
             const colors = ['#ffb6ee', '#ffffff', '#a0d8ff'];
             heart.style.color = colors[Math.floor(Math.random() * colors.length)];
             heart.innerHTML = '♥';
-            heart.style.left = (Math.random() * 80 + 10) + '%'; // 随机横向位置
-            heart.style.top = (messageDiv.scrollHeight - 30) + 'px'; // 靠近当前文字底部
+            heart.style.left = (Math.random() * 80 + 10) + '%';
+            heart.style.top = (messageDiv.scrollHeight - 30) + 'px';
             messageDiv.appendChild(heart);
             setTimeout(() => heart.remove(), 2000);
         }
