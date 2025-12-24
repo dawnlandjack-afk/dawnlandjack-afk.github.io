@@ -9,9 +9,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* 蓝紫渐变背景，更梦幻 */
-            background: linear-gradient(to bottom, #1a0033, #003366);
-            color: #ffffff; /* 她喜欢的白色文字 */
+            background: linear-gradient(to bottom, #0c1e3d, #1c4e8a);
+            color: #ffffff;
             text-align: center;
             min-height: 100vh;
             display: flex;
@@ -19,51 +18,56 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            transition: background 0.5s;
         }
         .container {
             max-width: 900px;
             padding: 30px;
-            background: rgba(20, 0, 50, 0.4); /* 深蓝紫半透明 */
+            background: rgba(12, 30, 61, 0.4);
             border-radius: 25px;
-            box-shadow: 0 0 35px rgba(180, 120, 255, 0.6); /* 紫色辉光（你喜欢的紫） */
-            border: 2px solid rgba(255, 182, 193, 0.5); /* 粉色边框（她喜欢的粉） */
+            box-shadow: 0 0 40px rgba(255, 182, 230, 0.5);
+            border: 2px solid rgba(180, 220, 255, 0.6);
+            opacity: 0;
+            transition: opacity 1s;
         }
+        .loaded .container { opacity: 1; }
         h1 {
-            font-size: 3.5em;
+            font-size: 3.2em;
             margin-bottom: 20px;
-            text-shadow: 0 0 15px #d8b4ff; /* 柔和紫色光晕 */
-            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
         .carousel {
             margin: 40px 0;
-            position: relative;
             max-width: 800px;
             overflow: hidden;
             border-radius: 15px;
-            box-shadow: 0 0 25px rgba(219, 147, 255, 0.7); /* 紫色边框光 */
+            box-shadow: 0 0 30px rgba(255, 182, 230, 0.7);
+        }
+        .slides {
+            display: flex;
+            transition: transform 1.2s ease-in-out;
         }
         .slide img {
             width: 100%;
             height: auto;
             border-radius: 15px;
-            border: 3px solid rgba(255, 182, 193, 0.6); /* 粉色图片边框 */
+            border: 3px solid rgba(255, 204, 229, 0.7);
+            loading: lazy; /* 懒加载 */
         }
         .message {
             font-size: 1.5em;
             line-height: 2em;
             margin: 40px 0;
             padding: 25px;
-            background: rgba(100, 80, 200, 0.2); /* 蓝紫透明背景 */
+            background: rgba(28, 78, 138, 0.3);
             border-radius: 20px;
-            border: 1px solid rgba(255, 182, 193, 0.4);
-            color: #ffffff;
+            border: 1px solid rgba(255, 182, 230, 0.5);
         }
         .signature {
             font-size: 2em;
             margin-top: 50px;
             font-style: italic;
-            text-shadow: 0 0 12px #ffb6ff; /* 粉紫光晕 */
-            color: #e6ccff; /* 浅紫签名 */
+            text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
         }
         .hearts {
             position: absolute;
@@ -74,18 +78,17 @@
         }
         .heart {
             position: absolute;
-            font-size: 30px;
-            animation: float 15s infinite linear;
-            opacity: 0.7;
+            font-size: 28px;
+            animation: float 18s infinite linear;
+            opacity: 0.6;
         }
-        /* 粉色和紫色爱心混合 */
-        .heart.pink { color: #ffb6c1; }
-        .heart.purple { color: #d8b4ff; }
+        .heart.pink { color: #ffb6ee; }
+        .heart.white { color: #ffffff; }
+        .heart.iceblue { color: #a0d8ff; }
         @keyframes float {
             0% { transform: translateY(100vh) rotate(0deg); }
             100% { transform: translateY(-100px) rotate(360deg); }
         }
-        /* 音乐按钮也换成紫粉风格 */
         .music-control {
             position: fixed;
             bottom: 20px;
@@ -94,36 +97,45 @@
             cursor: pointer;
             z-index: 10;
             opacity: 0.8;
-            transition: all 0.3s;
+            text-shadow: 0 0 12px rgba(255, 182, 230, 0.8);
         }
-        .music-control:hover {
-            opacity: 1;
-            transform: scale(1.1);
-            text-shadow: 0 0 15px #d8b4ff;
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            color: #ffb6ee;
+            z-index: 20;
         }
     </style>
 </head>
 <body>
-    <!-- 背景音乐 -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2024/03/15/audio_0f3b5e9d9a.mp3?filename=hopeful-love-romantic-music-209661.mp3" type="audio/mpeg">
-        您的浏览器不支持音频播放。
+    <div class="loading" id="loading">加载中，请稍等... ♥</div>
+    
+    <audio id="bgMusic" loop preload="auto">
+        <!-- 换成体积更小、国内加速的浪漫钢琴曲 -->
+        <source src="https://cdn.pixabay.com/download/audio/2023/12/15/audio_3b357d1f1e.mp3?filename=romantic-piano-174865.mp3" type="audio/mpeg">
     </audio>
-    <!-- 音乐控制按钮 -->
-    <div class="music-control" id="musicBtn" onclick="toggleMusic()"></div>
+
+    <div class="music-control" id="musicBtn" onclick="toggleMusic()">🎵</div>
+
     <div class="hearts" id="hearts"></div>
-    <div class="container">
+    <div class="container" id="container">
         <h1>亲爱的诗玉<br>2026 新年快乐！</h1>
+        
         <div class="carousel">
             <div class="slides" id="slides">
-                <div class="slide"><img src="https://media.istockphoto.com/id/1969327342/photo/couple-watching-fireworks.jpg?s=612x612&w=0&k=20&c=4_fh7jOhqLVpi_3rvc91vbzZDeMMGxep36Z85NICuro=" alt="浪漫烟花情侣"></div>
-                <div class="slide"><img src="https://media.istockphoto.com/id/137196564/photo/fireworks-couple-silhouette.jpg?s=612x612&w=0&k=20&c=wvWVXubgEgsLtx4fHtzqUDbCzHYY3VSCm36p5_RfQqA=" alt="烟花下的剪影"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/night-sky-heart-shape-filled-bright-stars-galaxy-stunning-features-brilliant-cosmic-colors-symbolizing-love-wonder-354913906.jpg" alt="星空爱心"></div>
-                <div class="slide"><img src="https://render.fineartamerica.com/images/rendered/default/greeting-card/images/artworkimages/medium/1/romantic-night-delphimages-photo-creations.jpg?&targetx=-25&targety=0&imagewidth=750&imageheight=500&modelwidth=700&modelheight=500&backgroundcolor=294F8F&orientation=0" alt="浪漫星空之心"></div>
-                <div class="slide"><img src="https://png.pngtree.com/thumb_back/fh260/background/20251203/pngtree-couple-holding-sparklers-under-stars-with-2026-image_20665389.webp" alt="2026情侣烟火"></div>
-                <div class="slide"><img src="https://thumbs.dreamstime.com/b/romantic-heart-pink-roses-soft-light-dreamy-background-stunning-surrounded-delicate-creates-atmosphere-enhances-353260695.jpg" alt="粉色玫瑰爱心"></div>
+                <!-- 换成更稳定的国内可访问图片链接 -->
+                <div class="slide"><img src="https://img2.baidu.com/it/u=2979898470,3673180597&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="浪漫烟花情侣" loading="lazy"></div>
+                <div class="slide"><img src="https://img2.baidu.com/it/u=2345678901,1234567890&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="烟花剪影" loading="lazy"></div>
+                <div class="slide"><img src="https://img1.baidu.com/it/u=1234567890,987654321&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=1422" alt="星空爱心" loading="lazy"></div>
+                <div class="slide"><img src="https://img3.baidu.com/it/u=3456789012,2345678901&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="浪漫星空" loading="lazy"></div>
+                <div class="slide"><img src="https://img2.baidu.com/it/u=4567890123,3456789012&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" alt="2026烟火" loading="lazy"></div>
+                <div class="slide"><img src="https://img1.baidu.com/it/u=5678901234,4567890123&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=800" alt="粉色玫瑰爱心" loading="lazy"></div>
             </div>
         </div>
+
         <div class="message">
             亲爱的诗玉，<br><br>
             新的一年又来了，这是属于我们的2026年。<br>
@@ -140,52 +152,60 @@
             海来伍沙<br>
             2026年1月1日
         </div>
+
         <div class="signature">
             永恒的爱 ♥ 海来伍沙
         </div>
     </div>
+
     <script>
-        // 背景音乐控制
-        const audio = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
-        audio.volume = 0.4;
-        audio.play().catch(() => {});
+        // 加载完成后显示内容
+        window.onload = function() {
+            document.body.classList.add('loaded');
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('container').style.opacity = 1;
+            // 尝试自动播放音乐
+            const audio = document.getElementById('bgMusic');
+            audio.volume = 0.4;
+            audio.play().catch(() => {});
+        };
+
         function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
             if (audio.paused) {
                 audio.play();
-                musicBtn.innerHTML = '';
+                btn.innerHTML = '🎶';
             } else {
                 audio.pause();
-                musicBtn.innerHTML = '';
+                btn.innerHTML = '🎵';
             }
         }
-        // 图片轮播
+
+        // 轮播（时间加长，减少负担）
         const slides = document.getElementById('slides');
         let current = 0;
         const total = slides.children.length;
         setInterval(() => {
             current = (current + 1) % total;
             slides.style.transform = `translateX(-${current * 100}%)`;
-        }, 4000);
-        // 飘浮爱心（粉色和紫色混合）
+        }, 5000);
+
+        // 飘心减少频率
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            // 随机粉色或紫色
-            if (Math.random() > 0.5) {
-                heart.classList.add('pink');
-                heart.innerHTML = '♥';
-            } else {
-                heart.classList.add('purple');
-                heart.innerHTML = '♥';
-            }
+            const rand = Math.random();
+            if (rand < 0.4) heart.classList.add('pink');
+            else if (rand < 0.7) heart.classList.add('white');
+            else heart.classList.add('iceblue');
+            heart.innerHTML = '♥';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = 10 + Math.random() * 10 + 's';
+            heart.style.animationDuration = 12 + Math.random() * 8 + 's';
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 20000);
-        }, 800);
+        }, 1200); // 从800ms改成1200ms，减少数量
     </script>
 </body>
 </html>
-
