@@ -32,6 +32,7 @@
             font-size: 2.8em;
             margin: 10px 0 20px;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
+            opacity: 0;
         }
         .photos {
             display: flex;
@@ -47,6 +48,13 @@
             overflow: hidden;
             box-shadow: 0 0 25px rgba(255, 182, 230, 0.6);
             border: 3px solid rgba(255, 204, 229, 0.7);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .photo-frame.show {
+            opacity: 1;
+            transform: translateY(0);
         }
         .photo-frame img {
             width: 100%;
@@ -61,12 +69,15 @@
             background: rgba(28, 78, 138, 0.3);
             border-radius: 20px;
             border: 1px solid rgba(255, 182, 230, 0.5);
+            min-height: 300px;
+            opacity: 0;
         }
         .signature {
             font-size: 1.8em;
             margin: 20px 0 10px;
             font-style: italic;
             text-shadow: 0 0 15px rgba(255, 182, 230, 0.9);
+            opacity: 0;
         }
         .hearts {
             position: fixed;
@@ -99,6 +110,17 @@
             z-index: 10;
             text-shadow: 0 0 12px rgba(255, 182, 230, 0.8);
         }
+        .cursor {
+            display: inline-block;
+            background-color: #ffb6ee;
+            margin-left: 4px;
+            width: 2px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -110,10 +132,9 @@
 
     <div class="hearts" id="hearts"></div>
     <div class="container">
-        <h1>亲爱的诗玉<br>2026 新年快乐！</h1>
+        <h1 id="title">亲爱的诗玉<br>2026 新年快乐！</h1>
         
-        <div class="photos">
-            <!-- 6张照片依次在框里 -->
+        <div class="photos" id="photos">
             <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/romantic-winter-fireworks-couple-celebrating-new-year-s-eve-breathtaking-scene-featuring-silhouetted-agnst-vibrant-sunset-407236789.jpg" alt="浪漫烟花情侣"></div>
             <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-fireworks-night-captivating-illustration-three-heart-shaped-fireworks-exploding-against-dark-night-sky-397643598.jpg" alt="心形烟花"></div>
             <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/heart-shaped-constellation-sparkles-night-sky-over-mountain-landscape-romantic-starry-love-concept-beautiful-nature-scenery-385718207.jpg" alt="星空爱心"></div>
@@ -122,29 +143,13 @@
             <div class="photo-frame"><img src="https://thumbs.dreamstime.com/b/happy-new-year-couple-love-under-spectacular-heart-fireworks-sunset-generativeai-413300990.jpg" alt="新年心形烟花"></div>
         </div>
 
-        <div class="message">
-            亲爱的诗玉，<br><br>
-            新的一年又来了，这是属于我们的2026年。<br>
-            从遇见你的那一刻起，你就是我生命中最美的风景，最温暖的港湾。<br>
-            你的笑容，是我每天最想看到的阳光；<br>
-            你的声音，是我心里最动听的旋律。<br><br>
-            在这个全新的开始，我想认真告诉你：<br>
-            我爱你，比任何时候都要深，比任何言语都要真。<br>
-            未来的每一天、每一年，我都想紧紧牵着你的手，一起去看更远的风景，一起创造更多属于我们的回忆。<br>
-            愿我们的爱，像这夜空的烟花一样绚烂夺目，像星星一样永恒闪耀。<br><br>
-            新年快乐，我的宝贝。<br>
-            愿2026年，我们幸福得像童话一样。<br><br>
-            永远爱你的，<br>
-            海来伍沙<br>
-            2026年1月1日
-        </div>
+        <div class="message" id="message"></div>
 
-        <div class="signature">
-            永恒的爱 ♥ 海来伍沙
-        </div>
+        <div class="signature" id="signature">永恒的爱 ♥ 海来伍沙</div>
     </div>
 
     <script>
+        // 背景音乐
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         audio.volume = 0.4;
@@ -160,6 +165,7 @@
             }
         }
 
+        // 飘心特效
         const heartsContainer = document.getElementById('hearts');
         setInterval(() => {
             const heart = document.createElement('div');
@@ -174,6 +180,72 @@
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 20000);
         }, 1200);
+
+        // 标题逐字出现
+        const title = document.getElementById('title');
+        const titleText = title.innerHTML;
+        title.innerHTML = '';
+        let i = 0;
+        const typeTitle = () => {
+            if (i < titleText.length) {
+                title.innerHTML += titleText.charAt(i);
+                i++;
+                setTimeout(typeTitle, 100);
+            } else {
+                title.style.opacity = 1;
+                setTimeout(showPhotos, 600);
+            }
+        };
+        setTimeout(typeTitle, 800);
+
+        // 照片逐个出现
+        const photoFrames = document.querySelectorAll('.photo-frame');
+        function showPhotos() {
+            photoFrames.forEach((frame, index) => {
+                setTimeout(() => {
+                    frame.classList.add('show');
+                }, index * 400);
+            });
+            setTimeout(typeMessage, photoFrames.length * 400 + 600);
+        }
+
+        // 告白文字逐字打字机效果
+        const fullText = `亲爱的诗玉，
+
+新的一年又来了，这是属于我们的2026年。
+从遇见你的那一刻起，你就是我生命中最美的风景，最温暖的港湾。
+你的笑容，是我每天最想看到的阳光；
+你的声音，是我心里最动听的旋律。
+
+在这个全新的开始，我想认真告诉你：
+我爱你，比任何时候都要深，比任何言语都要真。
+未来的每一天、每一年，我都想紧紧牵着你的手，一起去看更远的风景，一起创造更多属于我们的回忆。
+愿我们的爱，像这夜空的烟花一样绚烂夺目，像星星一样永恒闪耀。
+
+新年快乐，我的宝贝。
+愿2026年，我们幸福得像童话一样。
+
+永远爱你的，
+海来伍沙
+2026年1月1日`;
+
+        const messageDiv = document.getElementById('message');
+        let index = 0;
+        function typeMessage() {
+            messageDiv.style.opacity = 1;
+            if (index < fullText.length) {
+                messageDiv.innerHTML += fullText.charAt(index);
+                index++;
+                // <br> 换行后稍慢一点，更自然
+                const delay = fullText.charAt(index) === '\n' ? 400 : (Math.random() * 40 + 60);
+                setTimeout(typeMessage, delay);
+            } else {
+                // 打完后显示签名
+                setTimeout(() => {
+                    document.getElementById('signature').style.opacity = 1;
+                }, 800);
+            }
+        }
     </script>
 </body>
 </html>
