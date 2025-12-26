@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年的惊喜 ♡</title>
+    <title>2026年的专属惊喜 ♡</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffeef8, #e0f2fe, #c0e4ff);
+            background: linear-gradient(135deg, #fff0f8, #e6f0ff);
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* 浪漫心形粒子背景 */
+        /* 轻柔飘心背景 */
         .hearts {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -27,163 +24,198 @@
         }
         .heart {
             position: absolute;
-            width: 20px; height: 20px;
-            background: rgba(255, 105, 180, 0.6);
-            transform: rotate(45deg);
-            animation: float 15s infinite linear;
-            opacity: 0;
+            font-size: 20px;
+            animation: float 12s infinite linear;
+            opacity: 0.6;
         }
-        .heart:before, .heart:after {
-            content: '';
-            position: absolute;
-            width: 20px; height: 20px;
-            background: inherit;
-            border-radius: 50%;
-        }
-        .heart:before { top: -10px; left: 0; }
-        .heart:after { left: -10px; top: 0; }
         @keyframes float {
-            0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-100px) rotate(45deg); opacity: 0; }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
 
-        .slideshow {
+        /* 滑动容器 */
+        .slider {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
             position: relative;
-            width: 90%;
-            max-width: 600px;
-            text-align: center;
             z-index: 2;
-            padding: 20px;
+        }
+
+        .slides {
+            display: flex;
+            width: 700%; /* 7张图 */
+            height: 100%;
+            transition: transform 0.4s ease-in-out;
         }
 
         .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%;
-            opacity: 0;
-            animation: appear 32s infinite;
-        }
-        .slide:nth-child(1) { animation-delay: 0s; }
-        .slide:nth-child(2) { animation-delay: 8s; }
-        .slide:nth-child(3) { animation-delay: 16s; }
-        .slide:nth-child(4) { animation-delay: 24s; }
-        .slide:nth-child(5) { animation-delay: 32s; }
-        .slide:nth-child(6) { animation-delay: 40s; }
-        .slide:nth-child(7) { animation-delay: 48s; }
-
-        @keyframes appear {
-            0% { opacity: 0; transform: scale(0.85); }
-            6% { opacity: 1; transform: scale(1); }
-            25% { opacity: 1; transform: scale(1.02); }  /* 轻微心跳 */
-            31% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 0; }
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .slide img {
-            width: 100%;
-            max-height: 70vh;
+            width: 90%;
+            max-width: 420px;
+            max-height: 65vh;
             object-fit: cover;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
-            margin-bottom: 30px;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.25);
+            margin-bottom: 40px;
         }
 
         .caption {
-            font-size: 1.5em;
+            font-size: 1.55em;
             line-height: 1.8;
             color: #d63384;
+            text-align: center;
+            max-width: 90%;
             font-weight: 600;
-            opacity: 0;
-            animation: textUp 8s infinite;
-            animation-delay: inherit;
+            text-shadow: 0 2px 8px rgba(255,255,255,0.6);
         }
 
-        @keyframes textUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            12% { opacity: 1; transform: translateY(0); }
-            75% { opacity: 1; transform: translateY(0); }
-            90% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 0; }
+        /* 小圆点指示器 */
+        .dots {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,105,180,0.4);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: #ff69b4;
+            transform: scale(1.4);
         }
 
         header {
-            position: absolute;
+            position: fixed;
             top: 40px;
             width: 100%;
             text-align: center;
             color: #d63384;
-            font-size: 2.4em;
+            font-size: 2.2em;
             z-index: 3;
             text-shadow: 0 2px 10px rgba(255,255,255,0.8);
         }
 
         footer {
             position: fixed;
-            bottom: 30px;
+            bottom: 80px;
             width: 100%;
             text-align: center;
             color: #ff69b4;
             font-size: 1em;
             z-index: 3;
-            text-shadow: 0 1px 5px rgba(255,255,255,0.6);
         }
     </style>
 </head>
 <body>
-    <!-- 心形飘落背景 -->
+    <!-- 飘心 -->
     <div class="hearts">
-        <div class="heart" style="left:10%; animation-delay:0s;"></div>
-        <div class="heart" style="left:25%; animation-delay:3s;"></div>
-        <div class="heart" style="left:40%; animation-delay:7s;"></div>
-        <div class="heart" style="left:60%; animation-delay:2s;"></div>
-        <div class="heart" style="left:75%; animation-delay:10s;"></div>
-        <div class="heart" style="left:90%; animation-delay:5s;"></div>
+        <div class="heart" style="left:15%; animation-delay:0s;">♡</div>
+        <div class="heart" style="left:30%; animation-delay:4s;">♡</div>
+        <div class="heart" style="left:50%; animation-delay:8s;">♡</div>
+        <div class="heart" style="left:70%; animation-delay:2s;">♡</div>
+        <div class="heart" style="left:85%; animation-delay:6s;">♡</div>
     </div>
 
-    <header>
-        2026年的惊喜，献给你 ♡
-    </header>
+    <header>2026年的专属惊喜 ♡</header>
 
-    <div class="slideshow">
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df47462203.jpg" alt="蓝色花束">
-            <div class="caption">你送我的蓝色妖姬，像天空一样温柔，从此我的世界只开这一种颜色。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df46f96495.jpg" alt="比耶牵手">
-            <div class="caption">十指相扣，比出全世界最幸福的yeah，因为赢家永远是我们。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df8b4caebd.jpg" alt="电影院周年纪念">
-            <div class="caption">又一年，和你一起看《疯狂动物城》，原来最疯狂的不是动物，是我爱你的心。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df93da6865.jpg" alt="动漫自拍">
-            <div class="caption">如果我们是二次元情侣，我一定每天都给你画最甜的自拍背景。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df93cc208a.jpg" alt="动漫合照">
-            <div class="caption">漫画里的我们，也在认真地相爱着呢。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df93f7e0c9.jpg" alt="手放在胸口">
-            <div class="caption">把你的手放在我心口，它只为你跳得这么快，这么稳。</div>
-        </div>
-
-        <div class="slide">
-            <img src="https://youke2.picui.cn/s1/2025/12/26/694df93e911b6.jpg" alt="比心">
-            <div class="caption">比心不是姿势，是我每时每刻都在对你说：我爱你。</div>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df47462203.jpg" alt="蓝色花束">
+                <div class="caption">你送我的蓝色妖姬，像天空一样温柔，从此我的世界只开这一种颜色。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df46f96495.jpg" alt="比耶牵手">
+                <div class="caption">十指相扣，比出全世界最幸福的yeah，因为赢家永远是我们。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df8b4caebd.jpg" alt="电影院周年纪念">
+                <div class="caption">又一年，和你一起看《疯狂动物城》，原来最疯狂的不是动物，是我爱你的心。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df93da6865.jpg" alt="动漫自拍">
+                <div class="caption">如果我们是二次元情侣，我一定每天都给你画最甜的自拍背景。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df93cc208a.jpg" alt="动漫合照">
+                <div class="caption">漫画里的我们，也在认真地相爱着呢。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df93f7e0c9.jpg" alt="手放在胸口">
+                <div class="caption">把你的手放在我心口，它只为你跳得这么快，这么稳。</div>
+            </div>
+            <div class="slide">
+                <img src="https://youke2.picui.cn/s1/2025/12/26/694df93e911b6.jpg" alt="比心">
+                <div class="caption">比心不是姿势，是我每时每刻都在对你说：我爱你。</div>
+            </div>
         </div>
     </div>
 
-    <footer>
-        To my forever love ♡ | 2026
-    </footer>
+    <!-- 小圆点 -->
+    <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <footer>To my forever love ♡ 2026</footer>
+
+    <!-- 简单触控滑动支持（纯JS，轻量） -->
+    <script>
+        const slides = document.querySelector('.slides');
+        const dots = document.querySelectorAll('.dot');
+        let current = 0;
+        const total = 7;
+
+        function goToSlide(n) {
+            current = (n + total) % total;
+            slides.style.transform = `translateX(-${current * 100}vw)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+        }
+
+        let startX = 0;
+        document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+        document.addEventListener('touchend', e => {
+            let endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) goToSlide(current + 1); // 左滑下一张
+            if (endX - startX > 50) goToSlide(current - 1); // 右滑上一张
+        });
+
+        // 鼠标拖动支持（电脑上也能玩）
+        let isDown = false;
+        let startMouseX = 0;
+        document.addEventListener('mousedown', e => { isDown = true; startMouseX = e.clientX; });
+        document.addEventListener('mouseup', e => {
+            if (!isDown) return;
+            isDown = false;
+            if (startMouseX - e.clientX > 50) goToSlide(current + 1);
+            if (e.clientX - startMouseX > 50) goToSlide(current - 1);
+        });
+        document.addEventListener('mousemove', e => e.preventDefault(), {passive: false});
+    </script>
 </body>
 </html>
