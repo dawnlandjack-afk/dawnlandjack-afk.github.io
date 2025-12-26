@@ -12,10 +12,8 @@
         .letter-box { flex:1; overflow-y:auto; overflow-x:hidden; padding:0 10px 20px; line-height:2.3; font-size:1.18em; text-align:left; word-wrap:break-word; margin-bottom:20px; }
         .letter-box::-webkit-scrollbar { width:5px; }
         .letter-box::-webkit-scrollbar-thumb { background:rgba(136,14,79,0.4); border-radius:3px; }
-        .paragraph { margin: 18px 0; } /* 段落间距 */
-        .indent { display: inline; } /* 用于首行空两格 */
-        .salutation { font-size:1.3em; margin:20px 0 35px; text-align:center; }
-        .closing { text-align:right; margin-top:40px; font-size:1.3em; }
+        .salutation { font-size:1.3em; text-align:center; margin:20px 0 30px; }
+        .closing { text-align:right; margin:30px 0 15px; font-size:1.3em; line-height:1.8; }
         .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:2px; vertical-align:middle; animation:blink 1s infinite; }
         @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
         .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; }
@@ -44,79 +42,93 @@
     </div>
 
     <script>
-        // 正文内容，每段首行空两格用 &nbsp;&nbsp; 实现
-        const fullText = `亲爱的诗玉师妹：
+        // 内容字符串，每段正文前手动加 &nbsp;&nbsp; 实现首行缩进两格
+        const fullText = "亲爱的诗玉师妹：\n\n&nbsp;&nbsp;&nbsp;&nbsp;从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。\n\n&nbsp;&nbsp;&nbsp;&nbsp;每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。\n\n&nbsp;&nbsp;&nbsp;&nbsp;我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。\n\n&nbsp;&nbsp;&nbsp;&nbsp;诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。\n\n永远爱你的，\n师兄哥哥\n2026年1月1日";
 
-&nbsp;&nbsp;&nbsp;&nbsp;从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
-
-&nbsp;&nbsp;&nbsp;&nbsp;每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
-
-&nbsp;&nbsp;&nbsp;&nbsp;我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
-
-&nbsp;&nbsp;&nbsp;&nbsp;诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
-
-永远爱你的，
-师兄哥哥
-2026年1月1日`;
-
-        // 你的两张最新图片
+        // 你的两张照片
         const photoUrls = [
-            "https://youke2.picui.cn/s1/2025/12/26/694df47462203.jpg",  // 夜灯甜蜜合照
-            "https://youke2.picui.cn/s1/2025/12/26/694df46f96495.jpg"   // 牵手比爱心蓝玫瑰
+            "https://youke2.picui.cn/s1/2025/12/26/694df47462203.jpg",
+            "https://youke2.picui.cn/s1/2025/12/26/694df46f96495.jpg"
         ];
 
         const letterBox = document.getElementById('letter');
         const photosSection = document.getElementById('photosSection');
         const photosCarousel = document.getElementById('photosCarousel');
+        let i = 0;
+        const typingSpeed = 100;     // 打字速度，可根据需要调整（80-120都自然）
+        const paragraphPause = 1000; // 段落间额外停顿
 
-        // 直接插入HTML内容（因为已手动添加缩进和样式）
-        letterBox.innerHTML = fullText.replace(/\n/g, '<br>');
+        function typeWriter() {
+            if (i < fullText.length) {
+                const char = fullText.charAt(i);
 
-        // 应用样式
-        letterBox.querySelectorAll('br').forEach(br => {
-            if (br.previousSibling && br.previousSibling.nodeType === 3) {
-                // 空行段落间加间距
-                const p = document.createElement('div');
-                p.className = 'paragraph';
-                br.parentNode.insertBefore(p, br);
-            }
-        });
+                if (char === '\n') {
+                    letterBox.appendChild(document.createElement('br'));
+                } else if (char === '&') {
+                    // 处理 &nbsp;
+                    if (fullText.substr(i, 6) === '&nbsp;') {
+                        letterBox.appendChild(document.createTextNode('\u00A0'));
+                        i += 5; // 跳过 nbsp;
+                    } else {
+                        letterBox.appendChild(document.createTextNode(char));
+                    }
+                } else {
+                    const span = document.createElement('span');
+                    span.innerHTML = char;
+                    // 特殊样式处理
+                    if (fullText.substr(i-6, 12) === '诗玉师妹：') {
+                        span.className = 'salutation';
+                    } else if (fullText.substr(i, 12) === '永远爱你的，') {
+                        span.className = 'closing';
+                    } else if (fullText.substr(i, 6) === '师兄哥哥') {
+                        span.className = 'closing';
+                    } else if (fullText.substr(i, 4) === '2026') {
+                        span.className = 'closing';
+                    }
+                    letterBox.appendChild(span);
+                }
 
-        // 特殊处理问候语和落款
-        const lines = letterBox.innerHTML.split('<br>');
-        letterBox.innerHTML = `
-            <div class="salutation">${lines[0]}</div>
-            ${lines.slice(1, -3).join('<br>')}
-            <div class="closing">${lines.slice(-3).join('<br>')}</div>
-        `;
+                // 光标只显示在最后
+                if (i === fullText.length - 1) {
+                    const cursor = document.createElement('span');
+                    cursor.className = 'cursor';
+                    cursor.innerHTML = '&nbsp;';
+                    letterBox.appendChild(cursor);
+                }
 
-        // 打字效果改为淡入（因为缩进已固定，更优雅）
-        letterBox.style.opacity = 0;
-        window.onload = () => {
-            setTimeout(() => {
-                letterBox.style.opacity = 1;
-                letterBox.style.transition = 'opacity 2s ease';
-                // 3秒后显示照片区
+                letterBox.scrollTop = letterBox.scrollHeight;
+                i++;
+                setTimeout(typeWriter, char === '\n' ? paragraphPause : typingSpeed);
+            } else {
+                // 打完后移除光标，显示照片区
+                const cursor = document.querySelector('.cursor');
+                if (cursor) cursor.remove();
+
+                photoUrls.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'photo-item';
+                    const img = document.createElement('img');
+                    img.src = url;
+                    item.appendChild(img);
+                    photosCarousel.appendChild(item);
+                });
+
                 setTimeout(() => {
-                    photoUrls.forEach(url => {
-                        const item = document.createElement('div');
-                        item.className = 'photo-item';
-                        const img = document.createElement('img');
-                        img.src = url;
-                        item.appendChild(img);
-                        photosCarousel.appendChild(item);
-                    });
                     photosSection.style.opacity = 1;
-                }, 3000);
-            }, 1000);
+                }, 600);
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(typeWriter, 1200); // 开场稍作停顿，增加仪式感
         };
 
-        // 樱花飘落保持不变
+        // 樱花飘落
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸','🌺','🌷','💮','🏵️','🌹'];
         function createParticle() {
             const p = document.createElement('div');
-            p.classList.add('particle');
+            p.className = 'particle';
             p.textContent = petals[Math.floor(Math.random()*petals.length)];
             p.style.left = Math.random()*100 + 'vw';
             p.style.fontSize = (Math.random()*15 + 25) + 'px';
@@ -125,7 +137,7 @@
             p.addEventListener('animationend', () => p.remove());
         }
         setInterval(createParticle, 600);
-        for (let j=0; j<12; j++) setTimeout(createParticle, j*800);
+        for (let j = 0; j < 12; j++) setTimeout(createParticle, j * 800);
     </script>
 </body>
 </html>
