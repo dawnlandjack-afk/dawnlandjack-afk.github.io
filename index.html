@@ -6,24 +6,26 @@
     <title>2026年，给我的诗玉师妹</title>
     <style>
         body { margin:0; padding:0; height:100vh; background:linear-gradient(to bottom,#e0f7fa,#fff0f5); font-family:'华文楷体','KaiTi','微软雅黑',serif; color:#4a148c; display:flex; justify-content:center; align-items:center; overflow:hidden; position:relative; }
-        .container { width:90%; max-width:600px; height:85vh; background:rgba(255,255,255,0.78); border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.18); backdrop-filter:blur(12px); padding:30px 20px; display:flex; flex-direction:column; z-index:10; }
-        h1 { text-align:center; font-size:2.2em; color:#880e4f; letter-spacing:2px; margin-bottom:15px; flex-shrink:0; }
-        .heart-top { text-align:center; font-size:3.5em; color:#e91e63; margin-bottom:20px; flex-shrink:0; }
-        .letter-box { flex:1; overflow-y:auto; overflow-x:hidden; padding:0 10px 20px; line-height:2.3; font-size:1.18em; text-align:left; word-wrap:break-word; margin-bottom:20px; }
-        .letter-box::-webkit-scrollbar { width:5px; }
+        .container { width:90%; max-width:600px; height:90vh; background:rgba(255,255,255,0.78); border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.18); backdrop-filter:blur(12px); padding:40px 30px; display:flex; flex-direction:column; z-index:10; }
+        h1 { text-align:center; font-size:2.4em; color:#880e4f; letter-spacing:3px; margin-bottom:20px; flex-shrink:0; }
+        .heart-top { text-align:center; font-size:4em; color:#e91e63; margin:20px 0; flex-shrink:0; }
+        .letter-box { flex:1; overflow-y:auto; padding:0 15px; line-height:2.4; font-size:1.22em; text-align:justify; word-wrap:break-word; margin-bottom:30px; }
+        .letter-box::-webkit-scrollbar { width:6px; }
         .letter-box::-webkit-scrollbar-thumb { background:rgba(136,14,79,0.4); border-radius:3px; }
-        .typewriter { text-indent:2em; }
-        .salutation { text-indent:0 !important; font-size:1.3em; margin:20px 0 30px; text-align:center; }
-        .closing { text-indent:0 !important; text-align:right; margin-top:40px; font-size:1.3em; }
-        .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:2px; vertical-align:middle; animation:blink 1s infinite; }
+        .typewriter { text-indent:2em; display:block; margin:28px 0; }
+        .salutation { text-indent:0 !important; font-size:1.4em; margin:30px 0 40px; text-align:center; font-weight:bold; }
+        .closing { text-indent:0 !important; text-align:right; margin:50px 0 20px; font-size:1.4em; font-weight:bold; }
+        .date { text-align:right; font-size:1.1em; color:#880e4f; margin-top:10px; }
+        .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:3px; vertical-align:middle; animation:blink 1s infinite; }
         @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
-        .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; }
-        .photos-title { font-size:1.3em; color:#880e4f; margin-bottom:15px; }
-        .photos-carousel { display:flex; overflow-x:auto; gap:12px; padding:10px 0; scrollbar-width:none; }
+        .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; margin-top:20px; }
+        .photos-title { font-size:1.4em; color:#880e4f; margin-bottom:20px; letter-spacing:2px; }
+        .photos-carousel { display:flex; overflow-x:auto; gap:15px; padding:10px 0; scrollbar-width:none; }
         .photos-carousel::-webkit-scrollbar { display:none; }
-        .photo-item { flex-shrink:0; width:260px; height:260px; border-radius:18px; overflow:hidden; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
-        .photo-item img { width:100%; height:100%; object-fit:cover; }
-        .heart-bottom { text-align:center; font-size:3.5em; color:#e91e63; margin-top:20px; flex-shrink:0; }
+        .photo-item { flex-shrink:0; width:280px; height:280px; border-radius:20px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.22); }
+        .photo-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.3s; }
+        .photo-item img:hover { transform:scale(1.08); }
+        .heart-bottom { text-align:center; font-size:4em; color:#e91e63; margin-top:30px; flex-shrink:0; }
         .particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
         .particle { position:absolute; opacity:0.6; animation:fall linear infinite; }
         @keyframes fall { 0%{transform:translateY(-100px) rotate(0deg);opacity:0} 10%{opacity:0.6} 90%{opacity:0.6} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
@@ -55,15 +57,16 @@
 
 永远爱你的，
 师兄哥哥
+
 2026年1月1日`;
 
         const photoUrls = [
-            "https://s2.loli.net/2025/12/25/9vQbYkZ4oJ1rLhD.jpg",
-            "https://s2.loli.net/2025/12/25/5nX6pL9vZ3cR2jM.jpg",
-            "https://s2.loli.net/2025/12/25/8kWqVJ3mP7tN6xL.jpg",
-            "https://s2.loli.net/2025/12/25/4hR9bYvX2pL8kZJ.jpg",
-            "https://s2.loli.net/2025/12/25/7jM3qP6vN9tR5kX.jpg",
-            "https://s2.loli.net/2025/12/25/2xL9kZ5vJ7pQ8rN.jpg"
+            "https://qq.gxgif.com/tp/yb/202204131006184606.jpg",  // 浪漫拥抱
+            "https://qq.gxgif.com/tp/ql/202108171502382391.jpg",  // 海边玩水
+            "https://qq.gxgif.com/tp/ql/202205261942422502.jpg",  // 亲密合照
+            "https://thumbs.dreamstime.com/b/romantic-couple-strolls-hand-down-sun-dappled-path-park-warm-autumn-foliage-frames-scene-vibrant-orange-yellow-hues-398687257.jpg",  // 秋叶散步
+            "https://thumbs.dreamstime.com/b/couple-walking-hand-hand-autumn-park-filled-yellow-leaves-couple-seen-walking-hand-hand-down-pathway-406073040.jpg",  // 手牵手公园
+            "https://imgs.699pic.com/images/602/602/691.jpg!detail.v1"  // 亚洲情侣心形
         ];
 
         const letterBox = document.getElementById('letter');
@@ -78,15 +81,30 @@
                 const char = fullText[i];
                 const span = document.createElement('span');
                 span.textContent = char;
+
                 if (char === '\n') {
+                    if (fullText[i + 1] === '\n' || fullText.substring(i).startsWith('\n永远爱你的') || fullText.substring(i).startsWith('\n2026年')) {
+                        letterBox.appendChild(document.createElement('br'));
+                    }
                     letterBox.appendChild(document.createElement('br'));
-                    if (fullText[i + 1] === '\n') { setTimeout(typeWriter, paragraphPause); i++; return; }
+                    if (fullText[i + 1] === '\n') { 
+                        setTimeout(typeWriter, paragraphPause); 
+                        i++; 
+                        return; 
+                    }
                 } else {
-                    if (fullText.substring(i-6, i+1).includes('诗玉师妹：')) span.classList.add('salutation');
-                    else if (fullText.substring(i).startsWith('永远爱你的')) span.classList.add('closing');
-                    else span.classList.add('typewriter');
+                    if (fullText.substring(i).startsWith('亲爱的诗玉师妹：')) {
+                        span.classList.add('salutation');
+                    } else if (fullText.substring(i).startsWith('永远爱你的')) {
+                        span.classList.add('closing');
+                    } else if (fullText.substring(i).startsWith('2026年')) {
+                        span.classList.add('date');
+                    } else {
+                        span.classList.add('typewriter');
+                    }
                 }
                 letterBox.appendChild(span);
+
                 if (i === fullText.length - 1) {
                     const cursor = document.createElement('span');
                     cursor.classList.add('cursor');
@@ -99,20 +117,26 @@
             } else {
                 const cursor = document.querySelector('.cursor');
                 if (cursor) cursor.remove();
+                
+                // 加载照片
                 photoUrls.forEach(url => {
                     const item = document.createElement('div');
                     item.className = 'photo-item';
                     const img = document.createElement('img');
                     img.src = url;
+                    img.alt = '甜蜜回忆';
                     item.appendChild(img);
                     photosCarousel.appendChild(item);
                 });
-                setTimeout(() => { photosSection.style.opacity = 1; }, 500);
+                
+                // 照片区渐显
+                setTimeout(() => { photosSection.style.opacity = 1; }, 600);
             }
         }
 
         window.onload = () => setTimeout(typeWriter, 1000);
 
+        // 落花粒子效果
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸','🌺','🌷','💮','🏵️','🌹'];
         function createParticle() {
