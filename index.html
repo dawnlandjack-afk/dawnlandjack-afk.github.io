@@ -6,26 +6,25 @@
     <title>2026年，给我的诗玉师妹</title>
     <style>
         body { margin:0; padding:0; height:100vh; background:linear-gradient(to bottom,#e0f7fa,#fff0f5); font-family:'华文楷体','KaiTi','微软雅黑',serif; color:#4a148c; display:flex; justify-content:center; align-items:center; overflow:hidden; position:relative; }
-        .container { width:90%; max-width:600px; height:90vh; background:rgba(255,255,255,0.78); border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.18); backdrop-filter:blur(12px); padding:40px 30px; display:flex; flex-direction:column; z-index:10; }
-        h1 { text-align:center; font-size:2.4em; color:#880e4f; letter-spacing:3px; margin-bottom:20px; flex-shrink:0; }
-        .heart-top { text-align:center; font-size:4em; color:#e91e63; margin:20px 0; flex-shrink:0; }
-        .letter-box { flex:1; overflow-y:auto; padding:0 15px; line-height:2.4; font-size:1.22em; text-align:justify; word-wrap:break-word; margin-bottom:30px; }
-        .letter-box::-webkit-scrollbar { width:6px; }
+        .container { width:90%; max-width:600px; height:85vh; background:rgba(255,255,255,0.78); border-radius:25px; box-shadow:0 15px 40px rgba(0,0,0,0.18); backdrop-filter:blur(12px); padding:30px 20px; display:flex; flex-direction:column; z-index:10; }
+        h1 { text-align:center; font-size:2.2em; color:#880e4f; letter-spacing:2px; margin-bottom:15px; flex-shrink:0; }
+        .heart-top { text-align:center; font-size:3.5em; color:#e91e63; margin-bottom:20px; flex-shrink:0; }
+        .letter-box { flex:1; overflow-y:auto; overflow-x:hidden; padding:0 10px 20px; line-height:2.3; font-size:1.18em; text-align:left; word-wrap:break-word; margin-bottom:20px; }
+        .letter-box::-webkit-scrollbar { width:5px; }
         .letter-box::-webkit-scrollbar-thumb { background:rgba(136,14,79,0.4); border-radius:3px; }
-        .typewriter { text-indent:2em; display:block; margin:28px 0; }
-        .salutation { text-indent:0 !important; font-size:1.4em; margin:30px 0 40px; text-align:center; font-weight:bold; }
-        .closing { text-indent:0 !important; text-align:right; margin:50px 0 20px; font-size:1.4em; font-weight:bold; }
-        .date { text-align:right; font-size:1.1em; color:#880e4f; margin-top:10px; }
-        .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:3px; vertical-align:middle; animation:blink 1s infinite; }
+        .paragraph { margin: 18px 0; } /* 段落间距 */
+        .indent { display: inline; } /* 用于首行空两格 */
+        .salutation { font-size:1.3em; margin:20px 0 35px; text-align:center; }
+        .closing { text-align:right; margin-top:40px; font-size:1.3em; }
+        .cursor { display:inline-block; width:2px; height:1.2em; background:#4a148c; margin-left:2px; vertical-align:middle; animation:blink 1s infinite; }
         @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
-        .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; margin-top:20px; }
-        .photos-title { font-size:1.4em; color:#880e4f; margin-bottom:20px; letter-spacing:2px; }
-        .photos-carousel { display:flex; overflow-x:auto; gap:15px; padding:10px 0; scrollbar-width:none; }
+        .photos-section { opacity:0; transition:opacity 2s ease; flex-shrink:0; text-align:center; }
+        .photos-title { font-size:1.3em; color:#880e4f; margin-bottom:15px; }
+        .photos-carousel { display:flex; overflow-x:auto; gap:20px; padding:10px 0; scrollbar-width:none; }
         .photos-carousel::-webkit-scrollbar { display:none; }
-        .photo-item { flex-shrink:0; width:280px; height:280px; border-radius:20px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.22); }
-        .photo-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.3s; }
-        .photo-item img:hover { transform:scale(1.08); }
-        .heart-bottom { text-align:center; font-size:4em; color:#e91e63; margin-top:30px; flex-shrink:0; }
+        .photo-item { flex-shrink:0; width:280px; height:280px; border-radius:18px; overflow:hidden; box-shadow:0 8px 25px rgba(0,0,0,0.2); }
+        .photo-item img { width:100%; height:100%; object-fit:cover; }
+        .heart-bottom { text-align:center; font-size:3.5em; color:#e91e63; margin-top:20px; flex-shrink:0; }
         .particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
         .particle { position:absolute; opacity:0.6; animation:fall linear infinite; }
         @keyframes fall { 0%{transform:translateY(-100px) rotate(0deg);opacity:0} 10%{opacity:0.6} 90%{opacity:0.6} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
@@ -45,98 +44,74 @@
     </div>
 
     <script>
+        // 正文内容，每段首行空两格用 &nbsp;&nbsp; 实现
         const fullText = `亲爱的诗玉师妹：
 
-从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
+&nbsp;&nbsp;&nbsp;&nbsp;从遇见你的那一刻起，我的世界就悄悄被点亮了。你的笑容像春风一样温暖，轻轻拂过我心底最柔软的角落；你的眼神像星河般明亮，让我忍不住沉溺其中，无法自拔。
 
-每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
+&nbsp;&nbsp;&nbsp;&nbsp;每一次想到你，我的心就会不自觉地加速跳动，好像全世界都只剩下你我的存在。生活中的琐碎和疲惫，在你的陪伴下都变得甜蜜可爱。你是我生命中最美的诗篇，而我愿意用一生去读懂、去守护。
 
-我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
+&nbsp;&nbsp;&nbsp;&nbsp;我想牵着你的手，一起走过春夏秋冬，看日出日落，听风声雨声，感受岁月的温柔。我想在每一个平凡的日子里，把你的名字悄悄刻在心底，让爱成为我们不变的旋律。
 
-诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
+&nbsp;&nbsp;&nbsp;&nbsp;诗玉，我爱你，不只是因为你是你，更因为和你在一起，我才能成为更好的自己。愿我们的未来如同今天的微光，温暖而明亮，携手走向属于我们的幸福。
 
 永远爱你的，
 师兄哥哥
-
 2026年1月1日`;
 
+        // 你的两张最新图片
         const photoUrls = [
-            "https://qq.gxgif.com/tp/yb/202204131006184606.jpg",  // 浪漫拥抱
-            "https://qq.gxgif.com/tp/ql/202108171502382391.jpg",  // 海边玩水
-            "https://qq.gxgif.com/tp/ql/202205261942422502.jpg",  // 亲密合照
-            "https://thumbs.dreamstime.com/b/romantic-couple-strolls-hand-down-sun-dappled-path-park-warm-autumn-foliage-frames-scene-vibrant-orange-yellow-hues-398687257.jpg",  // 秋叶散步
-            "https://thumbs.dreamstime.com/b/couple-walking-hand-hand-autumn-park-filled-yellow-leaves-couple-seen-walking-hand-hand-down-pathway-406073040.jpg",  // 手牵手公园
-            "https://imgs.699pic.com/images/602/602/691.jpg!detail.v1"  // 亚洲情侣心形
+            "https://youke2.picui.cn/s1/2025/12/26/694df47462203.jpg",  // 夜灯甜蜜合照
+            "https://youke2.picui.cn/s1/2025/12/26/694df46f96495.jpg"   // 牵手比爱心蓝玫瑰
         ];
 
         const letterBox = document.getElementById('letter');
         const photosSection = document.getElementById('photosSection');
         const photosCarousel = document.getElementById('photosCarousel');
-        let i = 0;
-        const typingSpeed = 100;
-        const paragraphPause = 800;
 
-        function typeWriter() {
-            if (i < fullText.length) {
-                const char = fullText[i];
-                const span = document.createElement('span');
-                span.textContent = char;
+        // 直接插入HTML内容（因为已手动添加缩进和样式）
+        letterBox.innerHTML = fullText.replace(/\n/g, '<br>');
 
-                if (char === '\n') {
-                    if (fullText[i + 1] === '\n' || fullText.substring(i).startsWith('\n永远爱你的') || fullText.substring(i).startsWith('\n2026年')) {
-                        letterBox.appendChild(document.createElement('br'));
-                    }
-                    letterBox.appendChild(document.createElement('br'));
-                    if (fullText[i + 1] === '\n') { 
-                        setTimeout(typeWriter, paragraphPause); 
-                        i++; 
-                        return; 
-                    }
-                } else {
-                    if (fullText.substring(i).startsWith('亲爱的诗玉师妹：')) {
-                        span.classList.add('salutation');
-                    } else if (fullText.substring(i).startsWith('永远爱你的')) {
-                        span.classList.add('closing');
-                    } else if (fullText.substring(i).startsWith('2026年')) {
-                        span.classList.add('date');
-                    } else {
-                        span.classList.add('typewriter');
-                    }
-                }
-                letterBox.appendChild(span);
-
-                if (i === fullText.length - 1) {
-                    const cursor = document.createElement('span');
-                    cursor.classList.add('cursor');
-                    cursor.innerHTML = '&nbsp;';
-                    letterBox.appendChild(cursor);
-                }
-                letterBox.scrollTop = letterBox.scrollHeight;
-                i++;
-                setTimeout(typeWriter, typingSpeed);
-            } else {
-                const cursor = document.querySelector('.cursor');
-                if (cursor) cursor.remove();
-                
-                // 加载照片
-                photoUrls.forEach(url => {
-                    const item = document.createElement('div');
-                    item.className = 'photo-item';
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.alt = '甜蜜回忆';
-                    item.appendChild(img);
-                    photosCarousel.appendChild(item);
-                });
-                
-                // 照片区渐显
-                setTimeout(() => { photosSection.style.opacity = 1; }, 600);
+        // 应用样式
+        letterBox.querySelectorAll('br').forEach(br => {
+            if (br.previousSibling && br.previousSibling.nodeType === 3) {
+                // 空行段落间加间距
+                const p = document.createElement('div');
+                p.className = 'paragraph';
+                br.parentNode.insertBefore(p, br);
             }
-        }
+        });
 
-        window.onload = () => setTimeout(typeWriter, 1000);
+        // 特殊处理问候语和落款
+        const lines = letterBox.innerHTML.split('<br>');
+        letterBox.innerHTML = `
+            <div class="salutation">${lines[0]}</div>
+            ${lines.slice(1, -3).join('<br>')}
+            <div class="closing">${lines.slice(-3).join('<br>')}</div>
+        `;
 
-        // 落花粒子效果
+        // 打字效果改为淡入（因为缩进已固定，更优雅）
+        letterBox.style.opacity = 0;
+        window.onload = () => {
+            setTimeout(() => {
+                letterBox.style.opacity = 1;
+                letterBox.style.transition = 'opacity 2s ease';
+                // 3秒后显示照片区
+                setTimeout(() => {
+                    photoUrls.forEach(url => {
+                        const item = document.createElement('div');
+                        item.className = 'photo-item';
+                        const img = document.createElement('img');
+                        img.src = url;
+                        item.appendChild(img);
+                        photosCarousel.appendChild(item);
+                    });
+                    photosSection.style.opacity = 1;
+                }, 3000);
+            }, 1000);
+        };
+
+        // 樱花飘落保持不变
         const particlesContainer = document.getElementById('particles');
         const petals = ['🌸','🌺','🌷','💮','🏵️','🌹'];
         function createParticle() {
